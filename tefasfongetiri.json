@@ -1,0 +1,246 @@
+{
+  "name": "tefasfongetiri",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://tefas.takasbank.com.tr/api/funds/fonProfilDtyGetir",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"dil\": \"TR\",\n  \"fonKodu\": \"{{ $item(0).$node['When Executed by Another Workflow'].json['code'] }}\",\n  \"periyod\": {{ $json.period }}\n}\n\n\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        304,
+        128
+      ],
+      "id": "e5146012-1d13-49b0-9bf3-7a67d2943924",
+      "name": "fon analiz1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "function toNumber(x) {\n  if (x === undefined || x === null) return null;\n  const n = Number(x);\n  return Number.isFinite(n) ? n : null;\n}\n\ntry {\n  const input = items[0]?.json ?? {};\n\n  const resultList = Array.isArray(input.resultList)\n    ? input.resultList\n    : [];\n\n  if (!resultList.length) {\n    return [{\n      json: {\n        error: \"resultList boş veya bulunamadı\"\n      }\n    }];\n  }\n\n  const allNames = [];\n  const allValues = [];\n\n  for (const row of resultList) {\n    const name = row?.fonKodu ?? row?.Unvan ?? null;\n    const value = toNumber(row?.fonTurGetiri);\n\n    if (name !== null && value !== null) {\n      allNames.push(String(name));\n      allValues.push(value);\n    }\n  }\n\n  return [{\n    json: {\n      fund_code: $('When Executed by Another Workflow').first().json.code,\n      period_id: $('Loop Over Items').first().json.period,\n      comparison_names: JSON.stringify(allNames),\n      comparison_values: JSON.stringify(allValues),\n      fetched_at: new Date().toISOString().split('T')[0]\n    }\n  }];\n\n} catch (error) {\n  return [{\n    json: {\n      error: \"İşlem sırasında hata: \" + error.message\n    }\n  }];\n}\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        464,
+        128
+      ],
+      "id": "3a61ed36-6103-4e88-900a-a24ccd61fe97",
+      "name": "Code in JavaScript2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_comparison_history\n(fund_code, period_id, comparison_names, comparison_values, fetched_at)\nVALUES\n(\n  '{{ $json.fund_code }}',\n  {{ $json.period_id }},\n  '{{ $json.comparison_names }}',\n  '{{ $json.comparison_values }}',\n  '{{ $json.fetched_at }}'\n)\nON DUPLICATE KEY UPDATE\n  comparison_names = VALUES(comparison_names),\n  comparison_values = VALUES(comparison_values),\n  created_at = CURRENT_TIMESTAMP;\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        624,
+        128
+      ],
+      "id": "761211ce-d5d7-4644-9bd3-8653b7faec7e",
+      "name": "Execute a SQL query5",
+      "credentials": {
+        "mySql": {
+          "id": "ivghWbhMBSn5sCXQ",
+          "name": "tefas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## periyodik fon karşılaştırma\n\n",
+        "height": 656,
+        "width": 1440
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -272,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "d5831858-4fc5-480c-9e91-4dbfa99c3fcb",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { done: true } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        128
+      ],
+      "id": "e46dfd9a-0af8-4293-a879-693264fa618f",
+      "name": "Code in JavaScript6"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -208,
+        -96
+      ],
+      "id": "84d0afa3-971b-4387-858c-8f5fc6637cfb",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [\n  { json: { period: 0 } },   // YTD\n  { json: { period: 1 } },   // 1 Aylık\n  { json: { period: 3 } },   // 3 Aylık\n  { json: { period: 6 } },   // 6 Aylık\n  { json: { period: 12 } },  // 1 Yıllık\n  { json: { period: 36 } },  // 3 Yıllık\n  { json: { period: 60 } },  // 5 Yıllık\n  { json: { period: 13 } }   // Haftalık\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -48,
+        -96
+      ],
+      "id": "fbcf2869-137d-46e1-9fdd-1c6e6fd5ecb2",
+      "name": "periyods1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        144,
+        -96
+      ],
+      "id": "2952a3e9-0db4-4a02-80d2-2d9b1e1dc455",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        976,
+        128
+      ],
+      "id": "7d18751c-8f42-49b2-aaa1-c3146dfc11dd"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "fon analiz1": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript2": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query5": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript6",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "periyods1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "periyods1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "fon analiz1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript6": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "5f389bbb-7291-47a6-b2ae-8a5bebf463a8",
+  "meta": {
+    "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
+  },
+  "id": "Lg-uF4pVQ3cjG66RGePRM",
+  "tags": []
+}

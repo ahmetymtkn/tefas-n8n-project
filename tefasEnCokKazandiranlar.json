@@ -1,0 +1,156 @@
+{
+  "name": "tefasEnCokKazandiranlar",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        32,
+        160
+      ],
+      "id": "b50794ca-aa4c-4c42-b985-bac192376016",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "jsCode": "const TABLE_CAT  = 'tefas_best_category_rates';\nconst TABLE_FUND = 'tefas_best_fund_rates';\n\nconst period = $('When Executed by Another Workflow').first().json.period;\nconst payload = items[0].json;\n\nconst results = [];\n\nfunction esc(s) {\n  if (s === undefined || s === null) return '';\n  return String(s).replace(/'/g, \"''\");\n}\n\nfunction asArray(x) {\n  if (x === undefined || x === null) return [];\n  if (typeof x === 'string') {\n    try { x = JSON.parse(x); } catch { return []; }\n  }\n  return Array.isArray(x) ? x : [];\n}\n\nfunction numOrNull(x) {\n  if (x === undefined || x === null) return 'NULL';\n  const n = Number(x);\n  return Number.isFinite(n) ? n : 'NULL';\n}\n\nif (period === undefined || period === null) {\n  return [{ json: { error: 'period yok' } }];\n}\n\nconst resultList = asArray(payload.resultList);\n\nfor (const cat of resultList) {\n  // ✅ KATEGORİ ADI (DB ID'yi buna göre alacağız)\n  const categoryName = cat?.fonTurAciklama ? String(cat.fonTurAciklama).trim() : null;\n  if (!categoryName) continue;\n\n  const getiri = numOrNull(cat?.fonDonemGetiri);\n  const pazar  = numOrNull(cat?.pazarBuyukluk);\n\n  // ✅ 1) Kategori yoksa ekle (ID ŞİŞMEZ)\n  const sqlEnsureCat = `\n    INSERT INTO tefas_category (name)\n    SELECT '${esc(categoryName)}'\n    WHERE NOT EXISTS (\n      SELECT 1 FROM tefas_category WHERE name = '${esc(categoryName)}'\n    );\n  `.trim();\n  results.push({ json: { query: sqlEnsureCat } });\n\n  const sqlCat = `\n    INSERT INTO ${TABLE_CAT} (period_id, category_id, getiri, pazarbuyukluk, fetched_at)\n    VALUES (\n      ${period}, \n      (SELECT id FROM tefas_category WHERE name = '${esc(categoryName)}' LIMIT 1), \n      ${getiri}, \n      ${pazar}, \n      CURDATE()\n    )\n    ON DUPLICATE KEY UPDATE\n      getiri = VALUES(getiri),\n      pazarbuyukluk = VALUES(pazarbuyukluk);\n  `.trim();\n\n  results.push({ json: { query: sqlCat } });\n\n  // ✅ ALT FONLAR: resultList[].obje1List[].data[]\n  const groups = asArray(cat?.obje1List);\n\n  for (const g of groups) {\n    const funds = asArray(g?.data);\n\n    for (const f of funds) {\n      const fundCode = f?.name ? String(f.name).trim() : null; // örn: GJD\n      if (!fundCode) continue;\n\n      const rate = numOrNull(f?.y);\n\n      const sqlFund = `\n        INSERT INTO ${TABLE_FUND} (period_id, fund_id, category_id, rate, fetched_at)\n        SELECT\n          ${period},\n          tf.id,\n          (SELECT id FROM tefas_category WHERE name = '${esc(categoryName)}' LIMIT 1),\n          ${rate},\n          CURDATE()\n        FROM tefas_funds tf\n        WHERE tf.code = '${esc(fundCode)}'\n        LIMIT 1\n        ON DUPLICATE KEY UPDATE\n          rate = VALUES(rate);\n      `.trim();\n\n      results.push({ json: { query: sqlFund } });\n    }\n  }\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        160
+      ],
+      "id": "8339cf35-6770-4fd0-b3d2-f0ad99ab1cd4",
+      "name": "sql code creater"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{ $json.query }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        672,
+        160
+      ],
+      "id": "63b44973-a5e6-4ad8-b572-ed546dad3e1f",
+      "name": "best save",
+      "retryOnFail": true,
+      "credentials": {
+        "mySql": {
+          "id": "ivghWbhMBSn5sCXQ",
+          "name": "tefas"
+        }
+      },
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## EN ÇOK KAZANDIRANLAR\n\n \n\n",
+        "height": 320,
+        "width": 1008,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -96,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "3696c896-575a-4e71-ac28-002d24bd94c4",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tefas.takasbank.com.tr/api/funds/fonTurDnmGetiriGetir",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            },
+            {
+              "name": "X-Requested-With",
+              "value": "XMLHttpRequest"
+            },
+            {}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"dil\": \"TR\",\n  \"donem\": {{ $json.period }}\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        256,
+        160
+      ],
+      "id": "b8fcf21b-4208-425e-885b-365c219379fb",
+      "name": "best category and funds1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "best category and funds1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sql code creater": {
+      "main": [
+        [
+          {
+            "node": "best save",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "best category and funds1": {
+      "main": [
+        [
+          {
+            "node": "sql code creater",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "cb77c2dc-5d9c-4a7c-81f3-5a6c44a07287",
+  "meta": {
+    "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
+  },
+  "id": "WmWMcAUfkI8KHox9Ar7x_",
+  "tags": []
+}

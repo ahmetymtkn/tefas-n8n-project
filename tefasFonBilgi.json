@@ -1,0 +1,244 @@
+{
+  "name": "tefasFonBilgi",
+  "nodes": [
+    {
+      "parameters": {
+        "url": "=https://tefas.takasbank.com.tr/tr/fon-detayli-analiz/{{ $json.code }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        96,
+        -96
+      ],
+      "id": "5181123a-1524-40a3-ad8c-194353818a99",
+      "name": "fon analiz",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "15761140-a547-4753-acea-81a752d74d99",
+              "leftValue": "={{ $json.basliklar }}\n",
+              "rightValue": 0,
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        528,
+        -80
+      ],
+      "id": "1007a846-3e19-4e29-9438-14b9027f181f",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        912,
+        80
+      ],
+      "id": "b29afd43-be8a-4312-ac61-f5fbb0fe68ad",
+      "name": "Wait1",
+      "webhookId": "ce15cf89-87f0-43ce-9b54-c57af5a4cf6d"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -192,
+        -96
+      ],
+      "id": "57ef835e-d8f6-4bbb-adfe-44e6ee5017d4",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "content": "## FON BİLGİ\n \n",
+        "height": 496,
+        "width": 2080,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "9ff254d6-2719-4422-be95-07899d950879",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "basliklar",
+              "cssSelector": ".fund-detail-content",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        -96
+      ],
+      "id": "5691fd95-e32f-4f0f-830d-0a7b64f3dbc0",
+      "name": "HTML1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "function escSql(v) {\n  if (v === undefined || v === null) return \"NULL\";\n  if (typeof v === \"number\") return Number.isFinite(v) ? String(v) : \"NULL\";\n  const s = String(v).replace(/\\\\/g, \"\\\\\\\\\").replace(/'/g, \"''\");\n  return `'${s}'`;\n}\n\nfunction toNumberTR(s) {\n  if (s === undefined || s === null) return null;\n  s = String(s).trim();\n  if (!s || s === \"-\") return null;\n\n  // % işareti kaldır\n  s = s.replace(\"%\", \"\").trim();\n\n  // 656.812.433,53 -> 656812433.53\n  s = s.replace(/\\./g, \"\").replace(\",\", \".\");\n  const n = Number(s);\n  return Number.isFinite(n) ? n : null;\n}\n\nfunction todayISO() {\n  // UTC date (YYYY-MM-DD). İstersen TR timezone'a göre de yaparız.\n  return new Date().toISOString().slice(0, 10);\n}\n\n// ---------- PARSE (senin metin formatına göre) ----------\nfunction parseTefasLikeText(raw) {\n  if (Array.isArray(raw)) raw = raw.join(\"\\n\");\n  raw = String(raw ?? \"\");\n\n  const lines = raw\n    .replace(/\\r/g, \"\")\n    .split(\"\\n\")\n    .map(s => s.trim())\n    .filter(Boolean)\n    .filter(s =>\n      !s.startsWith(\"Bilgi [\") &&\n      !s.startsWith(\"Grafik [\") &&\n      s !== \"Grafik yükleniyor...\" &&\n      s !== \"Karşılaştırma bölümü yükleniyor...\"\n    );\n\n  const result = {\n    kv: {},                // key-value alanlar (Fon Kodu, ISIN, vs)\n    assetAllocation: [],   // [{type, ratio}]\n    returns: []            // [{period, value}]\n  };\n\n  const singleValueKeys = new Set([\n    \"Fon Kodu\",\"ISIN Kodu\",\"Platform Durumu\",\"İşlem Başlama Saati\",\"Son İşlem Saati\",\n    \"Fon Alış Valörü\",\"Fon Satış Valörü\",\"Giriş Komisyonu\",\"Çıkış Komisyonu\",\n    \"Fonun Faiz İçeriği\",\"Fon Risk Değeri\",\n    \"Son Fiyat (TL)\",\"Günlük Getiri (%)\",\"Pay (Adet)\",\"Fon Toplam Değer (TL)\",\n    \"Kategorisi\",\"Son 1 Yıllık Kategori Derecesi\",\"Yatırımcı Sayısı\",\"Pazar Payı\"\n  ]);\n\n  let section = \"kv\"; // kv | asset | returns\n\n  for (let i = 0; i < lines.length; i++) {\n    const s = lines[i];\n\n    if (s === \"FON VARLIK DAĞILIMI\") { section = \"asset\"; continue; }\n    if (s === \"GETIRI BILGISI\") { section = \"returns\"; continue; }\n    if (s === \"FON BILGISI\") { section = \"kv\"; continue; }\n\n    if (section === \"asset\" && (s === \"Varlık Türü\" || s === \"Oran (%)\")) continue;\n\n    // returns: \"Son X Getirisi\" + sonraki satır değer\n    if (section === \"returns\" && s.startsWith(\"Son \") && s.includes(\"Getirisi\")) {\n      const valueLine = lines[i + 1] ?? null;\n      result.returns.push({ period: s, value: toNumberTR(valueLine) });\n      i += 1;\n      continue;\n    }\n\n    // asset: type + % oran\n    if (section === \"asset\") {\n      const next = lines[i + 1] ?? null;\n      if (next && /%$/.test(next)) {\n        result.assetAllocation.push({ type: s, ratio: toNumberTR(next) });\n        i += 1;\n        continue;\n      }\n    }\n\n    // key-value\n    if (singleValueKeys.has(s)) {\n      const v = lines[i + 1] ?? null;\n      result.kv[s] = v === \"-\" ? null : v;\n      i += 1;\n      continue;\n    }\n  }\n\n  return result;\n}\n\n// ---------- KV -> DB alan map ----------\nfunction buildDbRow(parsed) {\n  const kv = parsed.kv || {};\n\n  // returns map\n  const ret = {};\n  for (const r of (parsed.returns || [])) ret[r.period] = r.value;\n\n  // asset'leri iki text alanına JSON olarak basacağız\n  const assetList = (parsed.assetAllocation || []).map(x => x.type);\n  const assetVals = (parsed.assetAllocation || []).map(x => x.ratio);\n\n  return {\n    code: kv[\"Fon Kodu\"] ?? null,\n    isin_code: kv[\"ISIN Kodu\"] ?? null,\n    platform_status: kv[\"Platform Durumu\"] ?? null,\n    interest_content: kv[\"Fonun Faiz İçeriği\"] ?? null,\n    risk_value: toNumberTR(kv[\"Fon Risk Değeri\"]),\n\n    last_price: toNumberTR(kv[\"Son Fiyat (TL)\"]),\n    daily_return: toNumberTR(kv[\"Günlük Getiri (%)\"]),\n    shares_outstanding: toNumberTR(kv[\"Pay (Adet)\"]),\n    total_value: toNumberTR(kv[\"Fon Toplam Değer (TL)\"]),\n\n    category: kv[\"Kategorisi\"] ?? null,\n    category_rank: kv[\"Son 1 Yıllık Kategori Derecesi\"] ?? null,\n\n    investor_count: (() => {\n      const n = toNumberTR(kv[\"Yatırımcı Sayısı\"]);\n      return n == null ? null : Math.trunc(n);\n    })(),\n\n    market_share: toNumberTR(kv[\"Pazar Payı\"]),\n\n    return_1m: ret[\"Son 1 Ay Getirisi\"] ?? null,\n    return_3m: ret[\"Son 3 Ay Getirisi\"] ?? null,\n    return_6m: ret[\"Son 6 Ay Getirisi\"] ?? null,\n    return_1y: ret[\"Son 1 Yıl Getirisi\"] ?? null,\n\n    fon_varlik_dagilim_list: JSON.stringify(assetList),\n    fon_varlik_dagilim_degerler: JSON.stringify(assetVals),\n\n    created_at: todayISO()\n  };\n}\n\n// ---------- Query üretimi (NAME'e dokunma!) ----------\nfunction makeQueries(row) {\n  if (!row.code) {\n    throw new Error(\"Fon Kodu (code) bulunamadı. Metinde 'Fon Kodu' yok.\");\n  }\n\n  // 1) tefas_funds \n  const qFunds = `\nINSERT INTO tefas_funds\n  (code, isin_code, platform_status, interest_content, risk_value, fon_varlık_dagılım_list, fon_varlık_dagılım_degerler)\nVALUES\n  (${escSql(row.code)}, ${escSql(row.isin_code)}, ${escSql(row.platform_status)}, ${escSql(row.interest_content)}, ${row.risk_value ?? \"NULL\"}, ${escSql(row.fon_varlik_dagilim_list)}, ${escSql(row.fon_varlik_dagilim_degerler)})\nON DUPLICATE KEY UPDATE\n  isin_code = VALUES(isin_code),\n  platform_status = VALUES(platform_status),\n  interest_content = VALUES(interest_content),\n  risk_value = VALUES(risk_value),\n  fon_varlık_dagılım_list = VALUES(fon_varlık_dagılım_list),\n  fon_varlık_dagılım_degerler = VALUES(fon_varlık_dagılım_degerler),\n  updated_at = CURRENT_TIMESTAMP;\n`.trim();\n\n  // 2) fund_stats_history UPSERT\n  const qHistory = `\nINSERT INTO fund_stats_history\n  (code, created_at, last_price, daily_return, shares_outstanding, total_value, category, category_rank, investor_count, market_share, return_1m, return_3m, return_6m, return_1y)\nVALUES\n  (${escSql(row.code)}, ${escSql(row.created_at)}, ${row.last_price ?? \"NULL\"}, ${row.daily_return ?? \"NULL\"}, ${row.shares_outstanding ?? \"NULL\"}, ${row.total_value ?? \"NULL\"}, ${escSql(row.category)}, ${escSql(row.category_rank)}, ${row.investor_count ?? \"NULL\"}, ${row.market_share ?? \"NULL\"}, ${row.return_1m ?? \"NULL\"}, ${row.return_3m ?? \"NULL\"}, ${row.return_6m ?? \"NULL\"}, ${row.return_1y ?? \"NULL\"})\nON DUPLICATE KEY UPDATE\n  last_price = VALUES(last_price),\n  daily_return = VALUES(daily_return),\n  shares_outstanding = VALUES(shares_outstanding),\n  total_value = VALUES(total_value),\n  category = VALUES(category),\n  category_rank = VALUES(category_rank),\n  investor_count = VALUES(investor_count),\n  market_share = VALUES(market_share),\n  return_1m = VALUES(return_1m),\n  return_3m = VALUES(return_3m),\n  return_6m = VALUES(return_6m),\n  return_1y = VALUES(return_1y);\n`.trim();\n\n  return [qFunds, qHistory];\n}\n\n// ---------- n8n ENTRY ----------\nconst inputJson = $input.first().json;\n\n// genelde HTML node'dan \"basliklar\" array geliyor\nconst basliklar = inputJson.basliklar ?? inputJson.raw ?? inputJson.text ?? \"\";\nconst rawText = Array.isArray(basliklar) ? basliklar[0] : basliklar;\n\nconst parsed = parseTefasLikeText(rawText);\nconst row = buildDbRow(parsed);\nconst [q1, q2] = makeQueries(row);\n\nreturn [\n  { json: { query: q1, code: row.code, created_at: row.created_at } },\n  { json: { query: q2, code: row.code, created_at: row.created_at } }\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        784,
+        -96
+      ],
+      "id": "f319a157-b466-48f2-aeda-a2cf404e039d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{$json.query}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        992,
+        -96
+      ],
+      "id": "df337acf-b29c-41c8-af01-d622f8d4c3fb",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "mySql": {
+          "id": "ivghWbhMBSn5sCXQ",
+          "name": "tefas"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "fon analiz": {
+      "main": [
+        [
+          {
+            "node": "HTML1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "fon analiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "fon analiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "957ef868-8e68-4b98-ab89-62091e119534",
+  "meta": {
+    "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
+  },
+  "id": "sItMX2eTI-bbpIy4dubVl",
+  "tags": []
+}
