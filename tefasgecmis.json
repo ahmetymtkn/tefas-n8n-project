@@ -18,7 +18,7 @@
       "parameters": {
         "content": "## tarihsel yeni geçmiş \n",
         "height": 304,
-        "width": 1552,
+        "width": 1392,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -29,79 +29,6 @@
       "typeVersion": 1,
       "id": "5c19cd1b-5257-47cd-a796-25d52b8e5b47",
       "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://tefas.takasbank.com.tr/api/funds/fonGnlBlgSiraliGetir",
-        "sendBody": true,
-        "contentType": "=json",
-        "specifyBody": "json",
-        "bodyParameters": {
-          "parameters": [
-            {}
-          ]
-        },
-        "jsonBody": "={\n  \"fonTipi\": \"YAT\",\n  \"fonKodu\": null,\n  \"aramaMetni\": null,\n  \"fonTurKod\": null,\n  \"fonGrubu\": null,\n  \"sfonTurKod\": null,\n  \"fonUnvanTip\": null,\n  \"kurucuKod\": null,\n  \"basTarih\": \"{{$json.date}}\",\n  \"bitTarih\": \"{{$json.date}}\",\n  \"basSira\": 1,\n  \"bitSira\": 1000000000,\n  \"dil\": \"TR\",\n  \"fonTurAciklama\": null\n}\n",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "json"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        -208,
-        -464
-      ],
-      "id": "aeafefcf-26a1-433e-ab0c-5795a0614ff3",
-      "name": "eski veriler2"
-    },
-    {
-      "parameters": {
-        "method": "POST",
-        "url": "https://tefas.takasbank.com.tr/api/funds/dagilimSiraliGetirT",
-        "sendBody": true,
-        "contentType": "=json",
-        "specifyBody": "json",
-        "bodyParameters": {
-          "parameters": [
-            {}
-          ]
-        },
-        "jsonBody": "={\n  \"fonTipi\": \"YAT\",\n  \"fonKodu\": null,\n  \"aramaMetni\": null,\n  \"fonTurKod\": null,\n  \"fonGrubu\": null,\n  \"sfonTurKod\": null,\n  \"fonUnvanTip\": null,\n  \"kurucuKod\": null,\n  \"basTarih\": \"{{$('When Executed by Another Workflow').item.json.date}}\",\n  \"bitTarih\": \"{{$('When Executed by Another Workflow').item.json.date}}\",\n  \"basSira\": 1,\n  \"bitSira\": 1000000000,\n  \"dil\": \"TR\"\n}\n",
-        "options": {
-          "response": {
-            "response": {
-              "responseFormat": "json"
-            }
-          }
-        }
-      },
-      "type": "n8n-nodes-base.httpRequest",
-      "typeVersion": 4.3,
-      "position": [
-        192,
-        -480
-      ],
-      "id": "b169b5e3-3c59-4fcc-8b50-a642629e2561",
-      "name": "eski veriler3"
-    },
-    {
-      "parameters": {
-        "jsCode": "// CodeJS1 (Run Once for All Items)\n\n// 1) Kaynakları doğru yerden al\nconst genelResp = $('eski veriler2').first().json;   // HTTP response object\nconst detayResp = $('eski veriler3').first().json;\n\nconst genelList = genelResp?.resultList ?? genelResp?.data?.resultList ?? [];\nconst detayList = detayResp?.resultList ?? detayResp?.data?.resultList ?? [];\n\n// 2) Tarih: json içinden alıp dd.mm.yyyy yap\nfunction toDDMMYYYY(iso) {\n  if (!iso) return null;\n  const s = String(iso).trim();\n  const m = s.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);\n  if (m) return `${m[3]}.${m[2]}.${m[1]}`;\n  const m2 = s.match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);\n  if (m2) return s;\n  return null;\n}\n\n// 3) Genel liste boşsa bile 1 item döndür (workflow durmasın)\nif (!Array.isArray(genelList) || genelList.length === 0) {\n  return [{\n    json: {\n      _skip: true,\n      reason: 'genelList boş geldi (eski veriler2 resultList yok)',\n      genelKeys: Object.keys(genelResp || {}),\n      detayKeys: Object.keys(detayResp || {})\n    }\n  }];\n}\n\n// 4) Birleştir\nconst birlesik = genelList.map(genel => {\n  const code = (genel?.fonKodu ?? genel?.FONKODU ?? '').toString().trim();\n\n  const detay = (Array.isArray(detayList) ? detayList : []).find(d => {\n    const dcode = (d?.fonKodu ?? d?.FONKODU ?? '').toString().trim();\n    return code && dcode && code === dcode;\n  }) || {};\n\n  const sql_tarih = toDDMMYYYY(genel?.tarih ?? detay?.tarih);\n\n  return {\n    json: {\n      ...genel,\n      ...detay,\n      sql_tarih,\n      fonKodu: code\n    }\n  };\n});\n\nreturn birlesik;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        384,
-        -480
-      ],
-      "id": "ef2ea375-c7ed-420e-97ae-1d9545d85eb7",
-      "name": "Code in JavaScript"
     },
     {
       "parameters": {
@@ -139,19 +66,6 @@
     },
     {
       "parameters": {
-        "jsCode": "// SQL CODER (Run Once for All Items)\n\nconst results = [];\n\nfunction esc(v) {\n  return String(v ?? '').replace(/\\\\/g, '\\\\\\\\').replace(/'/g, \"''\");\n}\n\nfunction num(v, def = 'NULL') {\n  if (v === null || v === undefined || v === '' || v === 'NULL') return def;\n  const s = String(v).replace(',', '.');\n  const n = Number(s);\n  return Number.isFinite(n) ? String(n) : def;\n}\n\nfunction str(v) {\n  if (v === null || v === undefined || v === '' || v === 'NULL') return 'NULL';\n  return `'${esc(v)}'`;\n}\n\n// bazı field'lar farklı isimle gelebilir -> getter\nfunction get(j, ...keys) {\n  for (const k of keys) {\n    if (j && Object.prototype.hasOwnProperty.call(j, k)) return j[k];\n  }\n  return undefined;\n}\n\nfor (const item of $input.all()) {\n  const j = item.json;\n\n  const code = (get(j, 'fonKodu', 'FONKODU', 'code') ?? '').toString().trim();\n  const sql_tarih = get(j, 'sql_tarih'); // CodeJS1 bunu dd.mm.yyyy yaptı\n\n  const query = `\nINSERT INTO tefas_fund_details (\n  code, tarih, FIYAT, TEDPAYSAYISI, KISISAYISI, PORTFOYBUYUKLUK, BORSABULTENFIYAT,\n  BB, BPP, BYF, D, DB, DT, DÖT, EUT, FB, FKB, GAS, GSYKB, GSYY, GYKB, GYY, HB, HS,\n  KBA, KH, KHAU, KHD, KHTL, KKS, KKSD, KKSTL, KKSYD, KM, KMBYF, KMKBA, KMKKS, KİBD,\n  OSKS, OST, R, T, TPP, TR, VDM, VM, VMAU, VMD, VMTL, VİNT, YBA, YBKB, YBOSB, YBYF,\n  YHS, YMK, YYF, ÖKSYD, ÖSDB, BilFiyat\n)\nSELECT\n  TRIM('${esc(code)}'),\n  STR_TO_DATE('${esc(sql_tarih)}', '%d.%m.%Y'),\n\n  ${num(get(j, 'fiyat', 'FIYAT'), '0')},\n  ${num(get(j, 'tedPaySayisi', 'TEDPAYSAYISI'), '0')},\n  ${num(get(j, 'kisiSayisi', 'KISISAYISI'), '0')},\n  ${num(get(j, 'portfoyBuyukluk', 'PORTFOYBUYUKLUK'), '0')},\n  ${str(get(j, 'borsaBultenFiyat', 'BORSABULTENFIYAT'))},\n\n  ${num(get(j,'bb','BB'))}, ${num(get(j,'bpp','BPP'))}, ${num(get(j,'byf','BYF'))},\n  ${num(get(j,'d','D'))},  ${num(get(j,'db','DB'))},  ${num(get(j,'dt','DT'))},\n  ${num(get(j,'dot','DÖT','döt'))}, ${num(get(j,'eut','EUT'))}, ${num(get(j,'fb','FB'))},\n  ${num(get(j,'fkb','FKB'))}, ${num(get(j,'gas','GAS'))}, ${num(get(j,'gsykb','GSYKB'))},\n  ${num(get(j,'gsyy','GSYY'))}, ${num(get(j,'gykb','GYKB'))}, ${num(get(j,'gyy','GYY'))},\n  ${num(get(j,'hb','HB'))}, ${num(get(j,'hs','HS'))},\n\n  ${num(get(j,'kba','KBA'))}, ${num(get(j,'kh','KH'))}, ${num(get(j,'khau','KHAU'))},\n  ${num(get(j,'khd','KHD'))}, ${num(get(j,'khtl','KHTL'))}, ${num(get(j,'kks','KKS'))},\n  ${num(get(j,'kksd','KKSD'))}, ${num(get(j,'kkstl','KKSTL'))}, ${num(get(j,'kksyd','KKSYD'))},\n  ${num(get(j,'km','KM'))}, ${num(get(j,'kmbyf','KMBYF'))}, ${num(get(j,'kmkba','KMKBA'))},\n  ${num(get(j,'kmkks','KMKKS'))},\n  ${num(get(j,'kibd','KİBD'))},\n\n  ${num(get(j,'osks','OSKS'))}, ${num(get(j,'ost','OST'))}, ${num(get(j,'r','R'))},\n  ${num(get(j,'t','T'))}, ${num(get(j,'tpp','TPP'))},\n  ${num(get(j,'tr','TR'))},\n\n  ${num(get(j,'vdm','VDM'))}, ${num(get(j,'vm','VM'))}, ${num(get(j,'vmau','VMAU'))},\n  ${num(get(j,'vmd','VMD'))}, ${num(get(j,'vmtl','VMTL'))},\n  ${num(get(j,'vint','VİNT'))},\n\n  ${num(get(j,'yba','YBA'))}, ${num(get(j,'ybkb','YBKB'))}, ${num(get(j,'ybosb','YBOSB'))},\n  ${num(get(j,'ybyf','YBYF'))}, ${num(get(j,'yhs','YHS'))}, ${num(get(j,'ymk','YMK'))},\n  ${num(get(j,'yyf','YYF'))},\n\n  ${num(get(j,'oksyd','ÖKSYD'))},\n  ${num(get(j,'osdb','ÖSDB'))},\n\n  ${num(get(j,'bilFiyat','BilFiyat'), '0')}\nFROM DUAL\nWHERE EXISTS (\n  SELECT 1\n  FROM tefas_funds f\n  WHERE f.code = TRIM('${esc(code)}')\n)\nON DUPLICATE KEY UPDATE\n  FIYAT = VALUES(FIYAT),\n  PORTFOYBUYUKLUK = VALUES(PORTFOYBUYUKLUK),\n  KISISAYISI = VALUES(KISISAYISI),\n  TEDPAYSAYISI = VALUES(TEDPAYSAYISI),\n  BilFiyat = VALUES(BilFiyat);\n`.trim();\n\n  results.push({ json: { query } });\n}\n\nreturn results;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        576,
-        -480
-      ],
-      "id": "740ddf43-f306-4a6e-b26a-0347849220c2",
-      "name": "SQL CODER1"
-    },
-    {
-      "parameters": {
         "operation": "executeQuery",
         "query": "{{ $json.query }}\n",
         "options": {}
@@ -170,6 +84,92 @@
           "name": "tefas"
         }
       }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tefas.takasbank.com.tr/api/funds/fonGnlBlgSiraliGetir",
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"fonTipi\": \"YAT\",\n  \"fonKodu\": null,\n  \"aramaMetni\": null,\n  \"fonTurKod\": null,\n  \"fonGrubu\": null,\n  \"sfonTurKod\": null,\n  \"fonUnvanTip\": null,\n  \"kurucuKod\": null,\n  \"basTarih\": \"{{$json.date}}\",\n  \"bitTarih\": \"{{$json.date}}\",\n  \"basSira\": 1,\n  \"bitSira\": 1000000000,\n  \"dil\": \"TR\",\n  \"fonTurAciklama\": null\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        -208,
+        -464
+      ],
+      "id": "aeafefcf-26a1-433e-ab0c-5795a0614ff3",
+      "name": "genel bilgiler"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://tefas.takasbank.com.tr/api/funds/dagilimSiraliGetirT",
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"fonTipi\": \"YAT\",\n  \"fonKodu\": null,\n  \"aramaMetni\": null,\n  \"fonTurKod\": null,\n  \"fonGrubu\": null,\n  \"sfonTurKod\": null,\n  \"fonUnvanTip\": null,\n  \"kurucuKod\": null,\n  \"basTarih\": \"{{$('When Executed by Another Workflow').item.json.date}}\",\n  \"bitTarih\": \"{{$('When Executed by Another Workflow').item.json.date}}\",\n  \"basSira\": 1,\n  \"bitSira\": 1000000000,\n  \"dil\": \"TR\"\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        192,
+        -480
+      ],
+      "id": "b169b5e3-3c59-4fcc-8b50-a642629e2561",
+      "name": "portföy dağılımı"
+    },
+    {
+      "parameters": {
+        "jsCode": "// CodeJS1 (Run Once for All Items)\n\n// 1) Kaynakları doğru yerden al\nconst genelResp = $('genel bilgiler').first().json;   // HTTP response object\nconst detayResp = $('portföy dağılımı').first().json;\n\nconst genelList = genelResp?.resultList ?? genelResp?.data?.resultList ?? [];\nconst detayList = detayResp?.resultList ?? detayResp?.data?.resultList ?? [];\n\n// 2) Tarih: json içinden alıp dd.mm.yyyy yap\nfunction toDDMMYYYY(iso) {\n  if (!iso) return null;\n  const s = String(iso).trim();\n  const m = s.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);\n  if (m) return `${m[3]}.${m[2]}.${m[1]}`;\n  const m2 = s.match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/);\n  if (m2) return s;\n  return null;\n}\n\n// 3) Genel liste boşsa bile 1 item döndür (workflow durmasın)\nif (!Array.isArray(genelList) || genelList.length === 0) {\n  return [{\n    json: {\n      _skip: true,\n      reason: 'genelList boş geldi (eski veriler2 resultList yok)',\n      genelKeys: Object.keys(genelResp || {}),\n      detayKeys: Object.keys(detayResp || {})\n    }\n  }];\n}\n\n// 4) Birleştir\nconst birlesik = genelList.map(genel => {\n  const code = (genel?.fonKodu ?? genel?.FONKODU ?? '').toString().trim();\n\n  const detay = (Array.isArray(detayList) ? detayList : []).find(d => {\n    const dcode = (d?.fonKodu ?? d?.FONKODU ?? '').toString().trim();\n    return code && dcode && code === dcode;\n  }) || {};\n\n  const sql_tarih = toDDMMYYYY(genel?.tarih ?? detay?.tarih);\n\n  return {\n    json: {\n      ...genel,\n      ...detay,\n      sql_tarih,\n      fonKodu: code\n    }\n  };\n});\n\nreturn birlesik;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        -480
+      ],
+      "id": "ef2ea375-c7ed-420e-97ae-1d9545d85eb7",
+      "name": "veri düzenleme"
+    },
+    {
+      "parameters": {
+        "jsCode": "// SQL CODER (Run Once for All Items)\n\nconst results = [];\n\nfunction esc(v) {\n  return String(v ?? '').replace(/\\\\/g, '\\\\\\\\').replace(/'/g, \"''\");\n}\n\nfunction num(v, def = 'NULL') {\n  if (v === null || v === undefined || v === '' || v === 'NULL') return def;\n  const s = String(v).replace(',', '.');\n  const n = Number(s);\n  return Number.isFinite(n) ? String(n) : def;\n}\n\nfunction str(v) {\n  if (v === null || v === undefined || v === '' || v === 'NULL') return 'NULL';\n  return `'${esc(v)}'`;\n}\n\n// bazı field'lar farklı isimle gelebilir -> getter\nfunction get(j, ...keys) {\n  for (const k of keys) {\n    if (j && Object.prototype.hasOwnProperty.call(j, k)) return j[k];\n  }\n  return undefined;\n}\n\nfor (const item of $input.all()) {\n  const j = item.json;\n\n  const code = (get(j, 'fonKodu', 'FONKODU', 'code') ?? '').toString().trim();\n  const sql_tarih = get(j, 'sql_tarih'); // CodeJS1 bunu dd.mm.yyyy yaptı\n\n  const query = `\nINSERT INTO tefas_fund_details (\n  code, tarih, FIYAT, TEDPAYSAYISI, KISISAYISI, PORTFOYBUYUKLUK, BORSABULTENFIYAT,\n  BB, BPP, BYF, D, DB, DT, DÖT, EUT, FB, FKB, GAS, GSYKB, GSYY, GYKB, GYY, HB, HS,\n  KBA, KH, KHAU, KHD, KHTL, KKS, KKSD, KKSTL, KKSYD, KM, KMBYF, KMKBA, KMKKS, KİBD,\n  OSKS, OST, R, T, TPP, TR, VDM, VM, VMAU, VMD, VMTL, VİNT, YBA, YBKB, YBOSB, YBYF,\n  YHS, YMK, YYF, ÖKSYD, ÖSDB, BilFiyat\n)\nSELECT\n  TRIM('${esc(code)}'),\n  STR_TO_DATE('${esc(sql_tarih)}', '%d.%m.%Y'),\n\n  ${num(get(j, 'fiyat', 'FIYAT'), '0')},\n  ${num(get(j, 'tedPaySayisi', 'TEDPAYSAYISI'), '0')},\n  ${num(get(j, 'kisiSayisi', 'KISISAYISI'), '0')},\n  ${num(get(j, 'portfoyBuyukluk', 'PORTFOYBUYUKLUK'), '0')},\n  ${str(get(j, 'borsaBultenFiyat', 'BORSABULTENFIYAT'))},\n\n  ${num(get(j,'bb','BB'))}, ${num(get(j,'bpp','BPP'))}, ${num(get(j,'byf','BYF'))},\n  ${num(get(j,'d','D'))},  ${num(get(j,'db','DB'))},  ${num(get(j,'dt','DT'))},\n  ${num(get(j,'dot','DÖT','döt'))}, ${num(get(j,'eut','EUT'))}, ${num(get(j,'fb','FB'))},\n  ${num(get(j,'fkb','FKB'))}, ${num(get(j,'gas','GAS'))}, ${num(get(j,'gsykb','GSYKB'))},\n  ${num(get(j,'gsyy','GSYY'))}, ${num(get(j,'gykb','GYKB'))}, ${num(get(j,'gyy','GYY'))},\n  ${num(get(j,'hb','HB'))}, ${num(get(j,'hs','HS'))},\n\n  ${num(get(j,'kba','KBA'))}, ${num(get(j,'kh','KH'))}, ${num(get(j,'khau','KHAU'))},\n  ${num(get(j,'khd','KHD'))}, ${num(get(j,'khtl','KHTL'))}, ${num(get(j,'kks','KKS'))},\n  ${num(get(j,'kksd','KKSD'))}, ${num(get(j,'kkstl','KKSTL'))}, ${num(get(j,'kksyd','KKSYD'))},\n  ${num(get(j,'km','KM'))}, ${num(get(j,'kmbyf','KMBYF'))}, ${num(get(j,'kmkba','KMKBA'))},\n  ${num(get(j,'kmkks','KMKKS'))},\n  ${num(get(j,'kibd','KİBD'))},\n\n  ${num(get(j,'osks','OSKS'))}, ${num(get(j,'ost','OST'))}, ${num(get(j,'r','R'))},\n  ${num(get(j,'t','T'))}, ${num(get(j,'tpp','TPP'))},\n  ${num(get(j,'tr','TR'))},\n\n  ${num(get(j,'vdm','VDM'))}, ${num(get(j,'vm','VM'))}, ${num(get(j,'vmau','VMAU'))},\n  ${num(get(j,'vmd','VMD'))}, ${num(get(j,'vmtl','VMTL'))},\n  ${num(get(j,'vint','VİNT'))},\n\n  ${num(get(j,'yba','YBA'))}, ${num(get(j,'ybkb','YBKB'))}, ${num(get(j,'ybosb','YBOSB'))},\n  ${num(get(j,'ybyf','YBYF'))}, ${num(get(j,'yhs','YHS'))}, ${num(get(j,'ymk','YMK'))},\n  ${num(get(j,'yyf','YYF'))},\n\n  ${num(get(j,'oksyd','ÖKSYD'))},\n  ${num(get(j,'osdb','ÖSDB'))},\n\n  ${num(get(j,'bilFiyat','BilFiyat'), '0')}\nFROM DUAL\nWHERE EXISTS (\n  SELECT 1\n  FROM tefas_funds f\n  WHERE f.code = TRIM('${esc(code)}')\n)\nON DUPLICATE KEY UPDATE\n  FIYAT = VALUES(FIYAT),\n  PORTFOYBUYUKLUK = VALUES(PORTFOYBUYUKLUK),\n  KISISAYISI = VALUES(KISISAYISI),\n  TEDPAYSAYISI = VALUES(TEDPAYSAYISI),\n  BilFiyat = VALUES(BilFiyat);\n`.trim();\n\n  results.push({ json: { query } });\n}\n\nreturn results;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        576,
+        -480
+      ],
+      "id": "740ddf43-f306-4a6e-b26a-0347849220c2",
+      "name": "sql üretici"
     }
   ],
   "pinData": {},
@@ -178,40 +178,7 @@
       "main": [
         [
           {
-            "node": "eski veriler2",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "eski veriler2": {
-      "main": [
-        [
-          {
-            "node": "If",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "eski veriler3": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "SQL CODER1",
+            "node": "genel bilgiler",
             "type": "main",
             "index": 0
           }
@@ -222,14 +189,47 @@
       "main": [
         [
           {
-            "node": "eski veriler3",
+            "node": "portföy dağılımı",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "SQL CODER1": {
+    "genel bilgiler": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "portföy dağılımı": {
+      "main": [
+        [
+          {
+            "node": "veri düzenleme",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "veri düzenleme": {
+      "main": [
+        [
+          {
+            "node": "sql üretici",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sql üretici": {
       "main": [
         [
           {
@@ -247,7 +247,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "83d213dd-0681-4f15-a316-6b59a8ae84b3",
+  "versionId": "dac0a2bb-741c-4158-b20c-4acca4404086",
   "meta": {
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },

@@ -102,7 +102,7 @@
         160
       ],
       "id": "b8fcf21b-4208-425e-885b-365c219379fb",
-      "name": "best category and funds1"
+      "name": "best category and funds"
     }
   ],
   "pinData": {},
@@ -111,7 +111,7 @@
       "main": [
         [
           {
-            "node": "best category and funds1",
+            "node": "best category and funds",
             "type": "main",
             "index": 0
           }
@@ -129,7 +129,7 @@
         ]
       ]
     },
-    "best category and funds1": {
+    "best category and funds": {
       "main": [
         [
           {
@@ -147,7 +147,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "cb77c2dc-5d9c-4a7c-81f3-5a6c44a07287",
+  "versionId": "c8a1a28d-998f-4d4e-97be-e1665d79bb35",
   "meta": {
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },

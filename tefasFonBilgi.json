@@ -18,6 +18,94 @@
     },
     {
       "parameters": {
+        "amount": 60
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        768,
+        80
+      ],
+      "id": "b29afd43-be8a-4312-ac61-f5fbb0fe68ad",
+      "name": "Wait1",
+      "webhookId": "ce15cf89-87f0-43ce-9b54-c57af5a4cf6d"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -192,
+        -96
+      ],
+      "id": "57ef835e-d8f6-4bbb-adfe-44e6ee5017d4",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "content": "## FON BİLGİ\n \n",
+        "height": 496,
+        "width": 1520,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "9ff254d6-2719-4422-be95-07899d950879",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{$json.query}}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        992,
+        -112
+      ],
+      "id": "df337acf-b29c-41c8-af01-d622f8d4c3fb",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "mySql": {
+          "id": "ivghWbhMBSn5sCXQ",
+          "name": "tefas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "basliklar",
+              "cssSelector": ".fund-detail-content",
+              "returnArray": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        336,
+        -96
+      ],
+      "id": "5691fd95-e32f-4f0f-830d-0a7b64f3dbc0",
+      "name": "veri parser",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
         "conditions": {
           "options": {
             "caseSensitive": true,
@@ -46,77 +134,10 @@
       "typeVersion": 2.2,
       "position": [
         528,
-        -80
+        -96
       ],
       "id": "1007a846-3e19-4e29-9438-14b9027f181f",
-      "name": "If"
-    },
-    {
-      "parameters": {
-        "amount": 60
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        912,
-        80
-      ],
-      "id": "b29afd43-be8a-4312-ac61-f5fbb0fe68ad",
-      "name": "Wait1",
-      "webhookId": "ce15cf89-87f0-43ce-9b54-c57af5a4cf6d"
-    },
-    {
-      "parameters": {
-        "inputSource": "passthrough"
-      },
-      "type": "n8n-nodes-base.executeWorkflowTrigger",
-      "typeVersion": 1.1,
-      "position": [
-        -192,
-        -96
-      ],
-      "id": "57ef835e-d8f6-4bbb-adfe-44e6ee5017d4",
-      "name": "When Executed by Another Workflow"
-    },
-    {
-      "parameters": {
-        "content": "## FON BİLGİ\n \n",
-        "height": 496,
-        "width": 2080,
-        "color": 4
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        -288,
-        -160
-      ],
-      "typeVersion": 1,
-      "id": "9ff254d6-2719-4422-be95-07899d950879",
-      "name": "Sticky Note"
-    },
-    {
-      "parameters": {
-        "operation": "extractHtmlContent",
-        "extractionValues": {
-          "values": [
-            {
-              "key": "basliklar",
-              "cssSelector": ".fund-detail-content",
-              "returnArray": true
-            }
-          ]
-        },
-        "options": {}
-      },
-      "type": "n8n-nodes-base.html",
-      "typeVersion": 1.2,
-      "position": [
-        336,
-        -96
-      ],
-      "id": "5691fd95-e32f-4f0f-830d-0a7b64f3dbc0",
-      "name": "HTML1",
-      "onError": "continueRegularOutput"
+      "name": "veri kontrol"
     },
     {
       "parameters": {
@@ -126,31 +147,10 @@
       "typeVersion": 2,
       "position": [
         784,
-        -96
+        -112
       ],
       "id": "f319a157-b466-48f2-aeda-a2cf404e039d",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "{{$json.query}}",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        992,
-        -96
-      ],
-      "id": "df337acf-b29c-41c8-af01-d622f8d4c3fb",
-      "name": "Execute a SQL query",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
+      "name": "sql üretici"
     }
   ],
   "pinData": {},
@@ -159,25 +159,7 @@
       "main": [
         [
           {
-            "node": "HTML1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "If": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Wait1",
+            "node": "veri parser",
             "type": "main",
             "index": 0
           }
@@ -206,18 +188,36 @@
         ]
       ]
     },
-    "HTML1": {
+    "veri parser": {
       "main": [
         [
           {
-            "node": "If",
+            "node": "veri kontrol",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Code in JavaScript": {
+    "veri kontrol": {
+      "main": [
+        [
+          {
+            "node": "sql üretici",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sql üretici": {
       "main": [
         [
           {
@@ -235,7 +235,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "957ef868-8e68-4b98-ab89-62091e119534",
+  "versionId": "f0bc57a2-bf9c-4048-8724-f82988b960a9",
   "meta": {
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },

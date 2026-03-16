@@ -10,8 +10,8 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -32,
-        -96
+        16,
+        -112
       ],
       "typeVersion": 1,
       "id": "c472acca-c780-4079-bee4-a8268f5c2d71",
@@ -22,7 +22,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        32,
+        112,
         -32
       ],
       "id": "56fdca04-6e34-468b-84ea-bf22ebe7dde5",
@@ -59,39 +59,11 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        240,
+        288,
         -32
       ],
       "id": "25828cde-5cc4-4b34-b082-99837f757a85",
       "name": "fon bilgi"
-    },
-    {
-      "parameters": {
-        "jsCode": "const fonListesi = items[0].json.resultList;\n\nreturn fonListesi.map(item => {\n  return {\n    json: {\n      fund_code: item.fonKodu,\n      fund_name: item.fonUnvan,\n      category_name: item.fonTurAciklama\n    }\n  };\n});\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        448,
-        -32
-      ],
-      "id": "44f60e16-ebc1-4944-8103-aaa553282b39",
-      "name": "Code in JavaScript"
-    },
-    {
-      "parameters": {
-        "compare": "selectedFields",
-        "fieldsToCompare": "category_name",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.removeDuplicates",
-      "typeVersion": 2,
-      "position": [
-        832,
-        -32
-      ],
-      "id": "40934d78-cd0d-4ae9-a5c8-aec7fb1bcc54",
-      "name": "Remove Duplicates"
     },
     {
       "parameters": {
@@ -126,7 +98,7 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        1568,
+        1216,
         640
       ],
       "id": "aa25aef4-3dad-4caf-a1ee-9214d672294b"
@@ -206,7 +178,7 @@
       "parameters": {
         "content": "## FON BİLGİ\n \n",
         "height": 496,
-        "width": 2080,
+        "width": 1600,
         "color": 4
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -222,7 +194,7 @@
       "parameters": {
         "content": "## tarihsel geçmiş \n",
         "height": 496,
-        "width": 1808,
+        "width": 1344,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
@@ -236,26 +208,13 @@
     },
     {
       "parameters": {
-        "jsCode": "const items = [];\nlet current = new Date(2021, 1, 15);\nconst today = new Date();\n\nwhile (current <= today) {\n    const day = String(current.getDate()).padStart(2, '0');\n    const month = String(current.getMonth() + 1).padStart(2, '0');\n    const year = current.getFullYear();\n\n    items.push({\n        json: {\n            date: `${year}${month}${day}`\n        }\n    });\n\n    current.setDate(current.getDate() + 1);\n}\n\nreturn items;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        2352,
-        496
-      ],
-      "id": "edd0d8a7-eb9a-4cff-903d-7c238e19ba3c",
-      "name": "Code in JavaScript3"
-    },
-    {
-      "parameters": {
         "options": {}
       },
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
         2544,
-        512
+        496
       ],
       "id": "1097e7d1-34c3-4038-9895-621fd353f076",
       "name": "Loop Over Items4"
@@ -266,8 +225,8 @@
       "name": "Replace Me4",
       "typeVersion": 1,
       "position": [
-        3280,
-        672
+        3008,
+        608
       ],
       "id": "bf262f37-500e-4f90-b11e-3be94945f75e"
     },
@@ -289,32 +248,11 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2064,
+        1936,
         -80
       ],
       "id": "aa87f1f6-f82e-42b8-91ea-dbb92c6a1b42",
       "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT code FROM tefas_funds;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        1824,
-        -80
-      ],
-      "id": "27f287fa-7f28-4554-80a6-ee8d25a7d588",
-      "name": "Execute a SQL query",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
     },
     {
       "parameters": {
@@ -336,7 +274,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2048,
+        2192,
         496
       ],
       "id": "e62ada00-be3f-41e2-9f10-67a7a48c93bd",
@@ -349,7 +287,7 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2448,
+        2432,
         96
       ],
       "id": "a15566ed-97b5-436e-9f93-deb4316a3f7f",
@@ -443,7 +381,7 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2608,
+        2240,
         -64
       ],
       "id": "7216a289-20ac-4a17-8126-8952cec9f4cf",
@@ -474,11 +412,73 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2864,
-        576
+        2768,
+        608
       ],
       "id": "c2808460-6078-4457-8855-bc476aad7a83",
       "name": "Call 'tefasgecmis'"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fonListesi = items[0].json.resultList;\n\nreturn fonListesi.map(item => {\n  return {\n    json: {\n      fund_code: item.fonKodu,\n      fund_name: item.fonUnvan,\n      category_name: item.fonTurAciklama\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        -32
+      ],
+      "id": "44f60e16-ebc1-4944-8103-aaa553282b39",
+      "name": "fon liste"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "category_name",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        752,
+        -32
+      ],
+      "id": "40934d78-cd0d-4ae9-a5c8-aec7fb1bcc54",
+      "name": "category isimleri ayrıştırma"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT code FROM tefas_funds;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1744,
+        -80
+      ],
+      "id": "27f287fa-7f28-4554-80a6-ee8d25a7d588",
+      "name": "fonları getir",
+      "credentials": {
+        "mySql": {
+          "id": "ivghWbhMBSn5sCXQ",
+          "name": "tefas"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "//5 yillik tarih bilgisi olusturulur\n\nconst items = [];\nlet current = new Date(2021, 1, 15);\nconst today = new Date();\n\nwhile (current <= today) {\n    const day = String(current.getDate()).padStart(2, '0');\n    const month = String(current.getMonth() + 1).padStart(2, '0');\n    const year = current.getFullYear();\n\n    items.push({\n        json: {\n            date: `${year}${month}${day}`\n        }\n    });\n\n    current.setDate(current.getDate() + 1);\n}\n\nreturn items;\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2352,
+        496
+      ],
+      "id": "edd0d8a7-eb9a-4cff-903d-7c238e19ba3c",
+      "name": "tarih bilgisi"
     }
   ],
   "pinData": {},
@@ -498,34 +498,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Code in JavaScript": {
-      "main": [
-        [
-          {
-            "node": "Remove Duplicates",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Wait",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Remove Duplicates": {
-      "main": [
-        [
-          {
-            "node": "kategori kayıt",
+            "node": "fon liste",
             "type": "main",
             "index": 0
           }
@@ -594,17 +567,6 @@
         ]
       ]
     },
-    "Code in JavaScript3": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Loop Over Items4": {
       "main": [
         [],
@@ -662,22 +624,11 @@
         ]
       ]
     },
-    "Execute a SQL query": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "temizle": {
       "main": [
         [
           {
-            "node": "Execute a SQL query",
+            "node": "fonları getir",
             "type": "main",
             "index": 0
           }
@@ -688,7 +639,7 @@
       "main": [
         [
           {
-            "node": "Code in JavaScript3",
+            "node": "tarih bilgisi",
             "type": "main",
             "index": 0
           }
@@ -743,6 +694,55 @@
           }
         ]
       ]
+    },
+    "fon liste": {
+      "main": [
+        [
+          {
+            "node": "category isimleri ayrıştırma",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "category isimleri ayrıştırma": {
+      "main": [
+        [
+          {
+            "node": "kategori kayıt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fonları getir": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tarih bilgisi": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items4",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -751,7 +751,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "3907d58c-de5c-4c52-9c66-17365d9932e1",
+  "versionId": "c0e22ffd-c1fa-4da8-ac6b-457acc056d07",
   "meta": {
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },
