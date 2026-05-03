@@ -1,0 +1,386 @@
+{
+  "name": "tarihselveri",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -96,
+        176
+      ],
+      "id": "f1357847-377a-4e4c-922c-feeb13989627",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me",
+      "typeVersion": 1,
+      "position": [
+        1504,
+        208
+      ],
+      "id": "d8b63439-12d1-4d48-8b39-f9257a70c740"
+    },
+    {
+      "parameters": {
+        "batchSize": 200,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1056,
+        192
+      ],
+      "id": "066afc0c-9b95-45a1-9d02-f39ea9ac037b",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "content": "## tarihsel yeni geçmiş \n",
+        "height": 320,
+        "width": 1888,
+        "color": 3
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -160,
+        80
+      ],
+      "typeVersion": 1,
+      "id": "3858ef3c-18c2-4872-b478-c9a9187aef04",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d0849426-bef9-49ff-a693-0986814c7052",
+              "leftValue": "={{ $json.resultList && $json.resultList.length > 0 }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        224,
+        176
+      ],
+      "id": "639b639f-c872-4d6a-89be-f98cf8f421ba",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_fund_details (\n  code, tarih, FIYAT, TEDPAYSAYISI, KISISAYISI, PORTFOYBUYUKLUK, BORSABULTENFIYAT,\n  BB, BPP, BYF, D, DB, DT, DÖT, EUT, FB, FKB, GAS, GSYKB, GSYY, GYKB, GYY, HB, HS,\n  KBA, KH, KHAU, KHD, KHTL, KKS, KKSD, KKSTL, KKSYD, KM, KMBYF, KMKBA, KMKKS, KİBD,\n  OSKS, OST, R, T, TPP, TR, VDM, VM, VMAU, VMD, VMTL, VİNT, YBA, YBKB, YBOSB, YBYF,\n  YHS, YMK, YYF, ÖKSYD, ÖSDB, BilFiyat\n)\nSELECT \n  TRIM('{{ $json.code }}'),\n  STR_TO_DATE('{{ $json.sql_tarih }}', '%d.%m.%Y'),\n  {{ $json.FIYAT }}, {{ $json.TEDPAYSAYISI }}, {{ $json.KISISAYISI }}, {{ $json.PORTFOYBUYUKLUK }},\n  {{ $json.BORSABULTENFIYAT === null ? 'NULL' : \"'\" + $json.BORSABULTENFIYAT + \"'\" }},\n  {{ $json.BB }}, {{ $json.BPP }}, {{ $json.BYF }}, {{ $json.D }}, {{ $json.DB }}, {{ $json.DT }}, {{ $json.DÖT }},\n  {{ $json.EUT }}, {{ $json.FB }}, {{ $json.FKB }}, {{ $json.GAS }}, {{ $json.GSYKB }}, {{ $json.GSYY }}, {{ $json.GYKB }},\n  {{ $json.GYY }}, {{ $json.HB }}, {{ $json.HS }}, {{ $json.KBA }}, {{ $json.KH }}, {{ $json.KHAU }}, {{ $json.KHD }},\n  {{ $json.KHTL }}, {{ $json.KKS }}, {{ $json.KKSD }}, {{ $json.KKSTL }}, {{ $json.KKSYD }}, {{ $json.KM }}, {{ $json.KMBYF }},\n  {{ $json.KMKBA }}, {{ $json.KMKKS }}, {{ $json.KİBD }}, {{ $json.OSKS }}, {{ $json.OST }}, {{ $json.R }}, {{ $json.T }},\n  {{ $json.TPP }}, {{ $json.TR }}, {{ $json.VDM }}, {{ $json.VM }}, {{ $json.VMAU }}, {{ $json.VMD }}, {{ $json.VMTL }},\n  {{ $json.VİNT }}, {{ $json.YBA }}, {{ $json.YBKB }}, {{ $json.YBOSB }}, {{ $json.YBYF }}, {{ $json.YHS }}, {{ $json.YMK }},\n  {{ $json.YYF }}, {{ $json.ÖKSYD }}, {{ $json.ÖSDB }}, {{ $json.BilFiyat }}\nFROM DUAL\nWHERE EXISTS (\n  SELECT 1 FROM tefas_funds f WHERE f.code = TRIM('{{ $json.code }}')\n)\nON DUPLICATE KEY UPDATE\n  FIYAT = VALUES(FIYAT),\n  PORTFOYBUYUKLUK = VALUES(PORTFOYBUYUKLUK),\n  KISISAYISI = VALUES(KISISAYISI),\n  TEDPAYSAYISI = VALUES(TEDPAYSAYISI),\n  BilFiyat = VALUES(BilFiyat);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        1312,
+        208
+      ],
+      "id": "9f7c1f62-3db5-4e64-b514-6b513806a584",
+      "name": "EXECUTE SQL"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.tefas.gov.tr/api/funds/fonGnlBlgSiraliGetir",
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"aramaMetni\": null,\n  \"basSira\": 1,\n  \"basTarih\": \"{{ $json.startDate }}\",\n  \"bitSira\": 10000,\n  \"bitTarih\": \"{{ $json.endDate }}\",\n  \"dil\": \"TR\",\n  \"fonGrubu\": null,\n  \"fonKodu\": null,\n  \"fonTipi\": \"YAT\",\n  \"fonTurAciklama\": null,\n  \"fonTurKod\": null,\n  \"kurucuKod\": null,\n  \"sfonTurKod\": null\n}",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        64,
+        176
+      ],
+      "id": "896c8a21-3ef8-449a-932e-71013cad770c",
+      "name": "genel bilgiler1",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://www.tefas.gov.tr/api/funds/dagilimSiraliGetirT",
+        "sendBody": true,
+        "contentType": "=json",
+        "specifyBody": "json",
+        "bodyParameters": {
+          "parameters": [
+            {}
+          ]
+        },
+        "jsonBody": "={\n  \"fonTipi\": \"YAT\",\n  \"fonKodu\": null,\n  \"aramaMetni\": null,\n  \"fonTurKod\": null,\n  \"fonGrubu\": null,\n  \"sfonTurKod\": null,\n  \"fonUnvanTip\": null,\n  \"kurucuKod\": null,\n  \"basTarih\": \"{{$('When Executed by Another Workflow').item.json.startDate }}\",\n  \"bitTarih\": \"{{$('When Executed by Another Workflow').item.json.endDate}}\",\n  \"basSira\": 1,\n  \"bitSira\": 1000000000,\n  \"dil\": \"TR\"\n}\n",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "json"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        432,
+        160
+      ],
+      "id": "0074f629-c3d0-4951-9e26-abb0766b02cf",
+      "name": "portföy dağılımı1",
+      "retryOnFail": false,
+      "waitBetweenTries": 5000,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1) Kaynakları al\nconst genelResp = $('genel bilgiler1').first().json;\nconst detayResp = $('portföy dağılımı1').first().json;\n\nconst genelList = genelResp?.resultList ?? genelResp?.data?.resultList ?? [];\nconst detayList = detayResp?.resultList ?? detayResp?.data?.resultList ?? [];\n\n// 2) Tarih formatlayıcı \nfunction toDDMMYYYY(iso) {\n  if (!iso) return null;\n  const s = String(iso).trim();\n  const m = s.match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);\n  if (m) return `${m[3]}.${m[2]}.${m[1]}`;\n  return s.match(/^(\\d{2})\\.(\\d{2})\\.(\\d{4})$/) ? s : null;\n}\n\n// 3) HIZLANDIRICI: Detay listesini bir map haline getir\nconst detayMap = {};\nif (Array.isArray(detayList)) {\n  for (const item of detayList) {\n    const key = (item?.fonKodu ?? item?.FONKODU ?? '').toString().trim();\n    if (key) {\n      detayMap[key] = item;\n    }\n  }\n}\n\n// 4) Liste kontrolü\nif (!Array.isArray(genelList) || genelList.length === 0) {\n  return [{ json: { _skip: true, reason: 'genelList boş' } }];\n}\n\n// 5) Birleştirme \nreturn genelList.map(genel => {\n  const code = (genel?.fonKodu ?? genel?.FONKODU ?? '').toString().trim();\n  \n  // .find() yerine doğrudan Map'ten çekilir\n  const detay = detayMap[code] || {};\n  \n  const sql_tarih = toDDMMYYYY(genel?.tarih ?? detay?.tarih);\n\n  return {\n    json: {\n      ...genel,\n      ...detay,\n      sql_tarih,\n      fonKodu: code\n    }\n  };\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        736,
+        160
+      ],
+      "id": "29bf44b0-1f02-496b-bf77-5e51dceae19d",
+      "name": "veri düzenleme1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const results = [];\nfunction num(v, def = 0) {\n  if (v === null || v === undefined || v === '' || v === 'NULL') return def;\n  const s = String(v).replace(',', '.');\n  const n = Number(s);\n  return Number.isFinite(n) ? n : def;\n}\nfunction get(j, ...keys) {\n  for (const k of keys) {\n    if (j && Object.prototype.hasOwnProperty.call(j, k)) return j[k];\n  }\n  return undefined;\n}\nfor (const item of $input.all()) {\n  const j = item.json;\n  results.push({\n    json: {\n      code: (get(j, 'fonKodu', 'FONKODU', 'code') ?? '').toString().trim(),\n      sql_tarih: get(j, 'sql_tarih'),\n      FIYAT: num(get(j, 'fiyat', 'FIYAT')),\n      TEDPAYSAYISI: num(get(j, 'tedPaySayisi', 'TEDPAYSAYISI')),\n      KISISAYISI: num(get(j, 'kisiSayisi', 'KISISAYISI')),\n      PORTFOYBUYUKLUK: num(get(j, 'portfoyBuyukluk', 'PORTFOYBUYUKLUK')),\n      BORSABULTENFIYAT: get(j, 'borsaBultenFiyat', 'BORSABULTENFIYAT') ?? null,\n      BB: num(get(j,'bb','BB')),\n      BPP: num(get(j,'bpp','BPP')),\n      BYF: num(get(j,'byf','BYF')),\n      D: num(get(j,'d','D')),\n      DB: num(get(j,'db','DB')),\n      DT: num(get(j,'dt','DT')),\n      DÖT: num(get(j,'dot','DÖT','döt')),\n      EUT: num(get(j,'eut','EUT')),\n      FB: num(get(j,'fb','FB')),\n      FKB: num(get(j,'fkb','FKB')),\n      GAS: num(get(j,'gas','GAS')),\n      GSYKB: num(get(j,'gsykb','GSYKB')),\n      GSYY: num(get(j,'gsyy','GSYY')),\n      GYKB: num(get(j,'gykb','GYKB')),\n      GYY: num(get(j,'gyy','GYY')),\n      HB: num(get(j,'hb','HB')),\n      HS: num(get(j,'hs','HS')),\n      KBA: num(get(j,'kba','KBA')),\n      KH: num(get(j,'kh','KH')),\n      KHAU: num(get(j,'khau','KHAU')),\n      KHD: num(get(j,'khd','KHD')),\n      KHTL: num(get(j,'khtl','KHTL')),\n      KKS: num(get(j,'kks','KKS')),\n      KKSD: num(get(j,'kksd','KKSD')),\n      KKSTL: num(get(j,'kkstl','KKSTL')),\n      KKSYD: num(get(j,'kksyd','KKSYD')),\n      KM: num(get(j,'km','KM')),\n      KMBYF: num(get(j,'kmbyf','KMBYF')),\n      KMKBA: num(get(j,'kmkba','KMKBA')),\n      KMKKS: num(get(j,'kmkks','KMKKS')),\n      KİBD: num(get(j,'kibd','KİBD')),\n      OSKS: num(get(j,'osks','OSKS')),\n      OST: num(get(j,'ost','OST')),\n      R: num(get(j,'r','R')),\n      T: num(get(j,'t','T')),\n      TPP: num(get(j,'tpp','TPP')),\n      TR: num(get(j,'tr','TR')),\n      VDM: num(get(j,'vdm','VDM')),\n      VM: num(get(j,'vm','VM')),\n      VMAU: num(get(j,'vmau','VMAU')),\n      VMD: num(get(j,'vmd','VMD')),\n      VMTL: num(get(j,'vmtl','VMTL')),\n      VİNT: num(get(j,'vint','VİNT')),\n      YBA: num(get(j,'yba','YBA')),\n      YBKB: num(get(j,'ybkb','YBKB')),\n      YBOSB: num(get(j,'ybosb','YBOSB')),\n      YBYF: num(get(j,'ybyf','YBYF')),\n      YHS: num(get(j,'yhs','YHS')),\n      YMK: num(get(j,'ymk','YMK')),\n      YYF: num(get(j,'yyf','YYF')),\n      ÖKSYD: num(get(j,'oksyd','ÖKSYD')),\n      ÖSDB: num(get(j,'osdb','ÖSDB')),\n      BilFiyat: num(get(j,'bilFiyat','BilFiyat'))\n    }\n  });\n}\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        160
+      ],
+      "id": "6b2468da-e03d-49bc-ba6d-651b8a8386d0",
+      "name": "sql üretici1"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { done: true } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1328,
+        96
+      ],
+      "id": "d4cfd49f-3e50-4d78-9f15-68a711a04cf8",
+      "name": "temizle1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "67468440-d5ee-479b-9754-67396085fe77",
+              "leftValue": "={{ $json.error }}",
+              "rightValue": "",
+              "operator": {
+                "type": "object",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": "={{ false }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        576,
+        96
+      ],
+      "id": "c2c1d572-cc22-4b95-b7cb-b09905f7325e",
+      "name": "If"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "genel bilgiler1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "temizle1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "EXECUTE SQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "portföy dağılımı1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "temizle1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "EXECUTE SQL": {
+      "main": [
+        [
+          {
+            "node": "Replace Me",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "genel bilgiler1": {
+      "main": [
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "portföy dağılımı1": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "veri düzenleme1": {
+      "main": [
+        [
+          {
+            "node": "sql üretici1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "sql üretici1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "veri düzenleme1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "53d15074-fffc-403c-945a-bc32f27e2d79",
+  "meta": {
+    "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
+  },
+  "id": "CbRBTJUb0xot9QV4qns0d",
+  "tags": []
+}

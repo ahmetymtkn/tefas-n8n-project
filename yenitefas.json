@@ -10,28 +10,17 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        16,
-        -112
+        1744,
+        1072
       ],
       "typeVersion": 1,
-      "id": "c472acca-c780-4079-bee4-a8268f5c2d71",
+      "id": "9b10a184-a2be-4b78-8743-dfe1651894bc",
       "name": "Sticky Note"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.manualTrigger",
-      "typeVersion": 1,
-      "position": [
-        112,
-        -32
-      ],
-      "id": "56fdca04-6e34-468b-84ea-bf22ebe7dde5",
-      "name": "When clicking ‘Execute workflow’"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "https://tefas.takasbank.com.tr/api/funds/fonGetiriBazliBilgiGetir",
+        "url": "https://www.tefas.gov.tr/api/funds/fonGetiriBazliBilgiGetir",
         "sendHeaders": true,
         "headerParameters": {
           "parameters": [
@@ -59,10 +48,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        288,
-        -32
+        2016,
+        1152
       ],
-      "id": "25828cde-5cc4-4b34-b082-99837f757a85",
+      "id": "cfc959d6-a6fb-4ba8-b12a-1e939881f344",
       "name": "fon bilgi"
     },
     {
@@ -72,10 +61,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        720,
-        144
+        2448,
+        1328
       ],
-      "id": "33a6b375-3043-402f-8239-ea9a36d7bfc7",
+      "id": "ad36fdfc-30e4-4900-aee1-f5eaadf68107",
       "name": "Wait",
       "webhookId": "3880c23f-b270-4a7d-b659-500f99235b7b"
     },
@@ -86,10 +75,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        560,
-        496
+        2288,
+        1680
       ],
-      "id": "b88cbba8-edb7-470a-8690-759c91a2ca25",
+      "id": "23aacf84-0734-41d8-9f01-31ae6f699f6f",
       "name": "Loop Over Items"
     },
     {
@@ -98,10 +87,10 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        1216,
-        640
+        2944,
+        1824
       ],
-      "id": "aa25aef4-3dad-4caf-a1ee-9214d672294b"
+      "id": "d713c5a8-a413-4422-bb57-b806899296d8"
     },
     {
       "parameters": {
@@ -110,27 +99,11 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        304,
-        496
+        2032,
+        1680
       ],
-      "id": "20ec571a-8e5e-42f2-b4c7-674bb0ec2593",
+      "id": "9fd65699-f3c0-4f5c-a36b-556a10b61ee2",
       "name": "periyods"
-    },
-    {
-      "parameters": {
-        "content": "## EN ÇOK KAZANDIRANLAR\n\n \n\n",
-        "height": 496,
-        "width": 1808,
-        "color": 5
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        16,
-        432
-      ],
-      "typeVersion": 1,
-      "id": "0c0afc49-aca4-4bfc-8a4b-8882bc1ef27b",
-      "name": "Sticky Note1"
     },
     {
       "parameters": {
@@ -141,17 +114,11 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        1008,
-        144
+        2736,
+        1328
       ],
-      "id": "2b94637f-6f44-4a77-b3b1-0491400e34be",
-      "name": "fon kayıt",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
+      "id": "958bfdcc-6a71-4fa1-a12e-db310cb7439b",
+      "name": "fon kayıt"
     },
     {
       "parameters": {
@@ -162,17 +129,11 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        1040,
-        -32
+        2768,
+        1152
       ],
-      "id": "74b6e02a-a947-4faf-b9da-e45215f25e83",
-      "name": "kategori kayıt",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
+      "id": "c90ba93d-5901-4b65-b526-9bdb51fcbcb7",
+      "name": "kategori kayıt"
     },
     {
       "parameters": {
@@ -183,124 +144,62 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1584,
-        -112
+        3328,
+        1072
       ],
       "typeVersion": 1,
-      "id": "4f71346b-1dc9-4e7e-8eb4-c49aee6cc6fc",
+      "id": "a820f194-1985-476d-95be-479bf82a8613",
       "name": "Sticky Note2"
     },
     {
       "parameters": {
         "content": "## tarihsel geçmiş \n",
         "height": 496,
-        "width": 1344,
+        "width": 1508,
         "color": 3
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1856,
-        432
+        3584,
+        1616
       ],
       "typeVersion": 1,
-      "id": "1bca6ed7-3650-46a1-8892-fedbaeb406a0",
+      "id": "027183c4-7375-45ef-895d-c9f2b03de5b6",
       "name": "Sticky Note4"
     },
     {
       "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        2544,
-        496
-      ],
-      "id": "1097e7d1-34c3-4038-9895-621fd353f076",
-      "name": "Loop Over Items4"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "name": "Replace Me4",
-      "typeVersion": 1,
-      "position": [
-        3008,
-        608
-      ],
-      "id": "bf262f37-500e-4f90-b11e-3be94945f75e"
-    },
-    {
-      "parameters": {},
-      "type": "n8n-nodes-base.noOp",
-      "name": "Replace Me1",
-      "typeVersion": 1,
-      "position": [
-        2592,
-        96
-      ],
-      "id": "04bbd550-8f25-48f2-8790-099329ceb0bd"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "n8n-nodes-base.splitInBatches",
-      "typeVersion": 3,
-      "position": [
-        1936,
-        -80
-      ],
-      "id": "aa87f1f6-f82e-42b8-91ea-dbb92c6a1b42",
-      "name": "Loop Over Items1"
-    },
-    {
-      "parameters": {
-        "jsCode": "// Loop bittiğinde gelen 8 item'i (true'lar) tek item'e indirger\nreturn [{ json: { done: true } }];\n"
+        "jsCode": "return [{ json: { done: true } }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        1024,
-        496
+        2752,
+        1680
       ],
-      "id": "9b589420-1ea5-4eed-a4da-fd29b7caf5bf",
+      "id": "b92e5609-33a2-4ba3-8149-4f8a1c186c68",
       "name": "temizle"
     },
     {
       "parameters": {
-        "jsCode": "// Loop bittiğinde gelen 8 item'i (true'lar) tek item'e indirger\nreturn [{ json: { done: true } }];\n"
+        "jsCode": "return [{ json: { done: true } }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2192,
-        496
+        3616,
+        1792
       ],
-      "id": "e62ada00-be3f-41e2-9f10-67a7a48c93bd",
+      "id": "94d56f08-b699-4451-90dc-2c5690dd242c",
       "name": "temizle1"
-    },
-    {
-      "parameters": {
-        "amount": 1
-      },
-      "type": "n8n-nodes-base.wait",
-      "typeVersion": 1.1,
-      "position": [
-        2432,
-        96
-      ],
-      "id": "a15566ed-97b5-436e-9f93-deb4316a3f7f",
-      "name": "Wait1",
-      "webhookId": "406cf30f-448f-4d9b-9895-19046463b762"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "WmWMcAUfkI8KHox9Ar7x_",
+          "value": "OLheuZPzO07Dwkdt",
           "mode": "list",
-          "cachedResultUrl": "/workflow/WmWMcAUfkI8KHox9Ar7x_",
+          "cachedResultUrl": "/workflow/OLheuZPzO07Dwkdt",
           "cachedResultName": "tefasEnCokKazandiranlar"
         },
         "workflowInputs": {
@@ -319,19 +218,389 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        848,
-        608
+        2576,
+        1792
       ],
-      "id": "4fe83ae4-0ca3-448b-b8ff-cf9dc78f5214",
+      "id": "463e14af-f193-4b37-8c2b-c0370990bd27",
       "name": "Call 'tefasEnCokKazandiranlar'"
+    },
+    {
+      "parameters": {
+        "jsCode": "const fonListesi = items[0].json.resultList;\n\nreturn fonListesi.map(item => {\n  return {\n    json: {\n      fund_code: item.fonKodu,\n      fund_name: item.fonUnvan,\n      category_name: item.fonTurAciklama\n    }\n  };\n});\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2208,
+        1152
+      ],
+      "id": "59c0d48a-bf1f-486d-9c40-29c40a916631",
+      "name": "fon liste"
+    },
+    {
+      "parameters": {
+        "compare": "selectedFields",
+        "fieldsToCompare": "category_name",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.removeDuplicates",
+      "typeVersion": 2,
+      "position": [
+        2480,
+        1152
+      ],
+      "id": "0c94ba64-b6bd-4605-934d-22bcf13f96bf",
+      "name": "category isimleri ayrıştırma"
+    },
+    {
+      "parameters": {
+        "content": "## EN ÇOK KAZANDIRANLAR\n\n \n\n",
+        "height": 496,
+        "width": 1808,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1744,
+        1616
+      ],
+      "typeVersion": 1,
+      "id": "f0ae39b8-32e2-46f3-9c77-99ea0f146ef5",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        5264,
+        1136
+      ],
+      "id": "cd7429e3-b135-4e78-a1dc-9439a20bb653",
+      "name": "Loop Over Items5"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me5",
+      "typeVersion": 1,
+      "position": [
+        5600,
+        1264
+      ],
+      "id": "3e7b99f6-e34d-44f8-9fd4-e12b5374e291"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = [];\nconst today = new Date();\ntoday.setHours(0, 0, 0, 0);\n\nconst absoluteLimit = new Date();\nabsoluteLimit.setFullYear(today.getFullYear() - 5);\nabsoluteLimit.setHours(0, 0, 0, 0);\n\nlet current = new Date(absoluteLimit);\n\nconst formatDate = (date) => {\n    const d = String(date.getDate()).padStart(2, '0');\n    const m = String(date.getMonth() + 1).padStart(2, '0');\n    const y = date.getFullYear();\n    return `${y}${m}${d}`;\n};\n\nwhile (current < today) {\n    const startDate = formatDate(current);\n    let nextDate = new Date(current);\n    const day = current.getDate();\n\n    if (day < 5) {\n        nextDate.setDate(5);\n    } else if (day < 15) {\n        nextDate.setDate(15);\n    } else if (day < 25) {\n        nextDate.setDate(25);\n    } else {\n        nextDate.setMonth(nextDate.getMonth() + 1);\n        nextDate.setDate(5);\n    }\n\n    if (nextDate > today) {\n        nextDate = new Date(today);\n    }\n\n    items.push({\n        json: {\n            startDate: startDate,\n            endDate: formatDate(nextDate)\n        }\n    });\n\n    current = new Date(nextDate);\n}\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5072,
+        1136
+      ],
+      "id": "cd04b37a-d72e-4f0e-bf24-ddffa2137635",
+      "name": "tarih bilgisi1"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "sItMX2eTI-bbpIy4dubVl",
+          "value": "qBpYzlhDfG3o8QNP",
           "mode": "list",
-          "cachedResultUrl": "/workflow/sItMX2eTI-bbpIy4dubVl",
+          "cachedResultUrl": "/workflow/qBpYzlhDfG3o8QNP",
+          "cachedResultName": "tarihselveri"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "mode": "each",
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        5424,
+        1264
+      ],
+      "id": "709913d8-0fe6-4ec5-9374-55ba525e5bd9",
+      "name": "Call 'tarihselveri'"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        4128,
+        1840
+      ],
+      "id": "731a6397-af84-4430-8ba4-125959ef356a",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qBpYzlhDfG3o8QNP",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/qBpYzlhDfG3o8QNP",
+          "cachedResultName": "tarihselveri"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": true
+        },
+        "options": {
+          "waitForSubWorkflow": true
+        }
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        4528,
+        1856
+      ],
+      "id": "b8fadb07-09ee-47e5-a9ee-98d0c895a2e7",
+      "name": "Call 'tarihselveri'1"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me2",
+      "typeVersion": 1,
+      "position": [
+        4976,
+        1904
+      ],
+      "id": "16c53948-4e1f-4a93-acd4-125d34ca93f5"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT DISTINCT tarih \nFROM tefas_fund_details \nORDER BY tarih DESC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        3824,
+        1840
+      ],
+      "id": "d64ee33f-c094-4d74-9b6c-f7eb5ce7c636",
+      "name": "kayitli tarihler"
+    },
+    {
+      "parameters": {
+        "jsCode": "const existingDates = new Set($input.all().map(item => item.json.tarih));\nconst results = [];\nconst today = new Date();\nconst startDate = new Date();\n\nstartDate.setFullYear(today.getFullYear() - 5);\n\nlet currentDate = new Date(startDate);\n\nwhile (currentDate <= today) {\n  const dayOfWeek = currentDate.getDay();\n\n  // 0 = Pazar, 6 = Cumartesi\n  if (dayOfWeek !== 6 && dayOfWeek !== 0) {\n\n    // ISO yerine LOCAL tarih üret (kayma yok)\n    const year = currentDate.getFullYear();\n    const month = String(currentDate.getMonth() + 1).padStart(2, '0');\n    const day = String(currentDate.getDate()).padStart(2, '0');\n\n    const dateString = `${year}-${month}-${day}`;\n\n    if (!existingDates.has(dateString)) {\n      results.push({\n        json: {\n          missing_date: dateString\n        }\n      });\n    }\n  }\n\n  currentDate.setDate(currentDate.getDate() + 1);\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3952,
+        1840
+      ],
+      "id": "63c33a3f-6668-43fe-b275-1e6d96ee6a77",
+      "name": "olmayan tarihler"
+    },
+    {
+      "parameters": {
+        "jsCode": "for (const item of $input.all()) {\n  const dateStr = item.json.missing_date;\n\n  if (dateStr) {\n    const formattedDate = dateStr.replace(/-/g, '');\n    \n    item.json.startDate = formattedDate;\n    item.json.endDate = formattedDate;\n    \n    delete item.json.missing_date;\n  }\n}\n\nreturn $input.all();"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4336,
+        1856
+      ],
+      "id": "f2e447df-0c3f-4881-b432-f348a95a8729",
+      "name": "format dönüşümü"
+    },
+    {
+      "parameters": {
+        "content": "## 5 yıllık tüm kayıtlar",
+        "height": 496,
+        "width": 864
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        4960,
+        1072
+      ],
+      "typeVersion": 1,
+      "id": "d319a528-db5e-42b6-bece-9e6df8f58d21",
+      "name": "Sticky Note3"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 12
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        1808,
+        1168
+      ],
+      "id": "b89f5013-3def-4a8c-90d2-5a7d29085177",
+      "name": "Schedule Trigger",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## Trend\n\n",
+        "height": 496,
+        "width": 880,
+        "color": 2
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        5152,
+        1616
+      ],
+      "typeVersion": 1,
+      "id": "29c8157f-47ad-4ef4-86c1-2eaf3dbdbf3b",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT code, FIYAT, tarih \nFROM tefas_fund_details \nWHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 40 DAY) -- \nORDER BY code, tarih DESC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        5360,
+        1776
+      ],
+      "id": "92fbb633-9329-45d0-b8e8-bf1085e0d691",
+      "name": "40 günlük veri"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const prices = history.map(i => parseFloat(i.FIYAT) || 0);\n    const todayPrice = prices[0];\n    const todayDate = history[0].tarih;\n\n    let upStreak = 0;\n    let downStreak = 0;\n    let streakStartPrice = todayPrice;\n\n    if (prices[0] > prices[1]) {\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] > prices[i + 1]) {\n                upStreak++;\n                streakStartPrice = prices[i + 1];\n            } else break;\n        }\n    } else if (prices[0] < prices[1]) {\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] < prices[i + 1]) {\n                downStreak++;\n                streakStartPrice = prices[i + 1];\n            } else break;\n        }\n    }\n\n    let changePercent = 0;\n    if (streakStartPrice !== 0 && !isNaN(streakStartPrice)) {\n        changePercent = ((todayPrice - streakStartPrice) / streakStartPrice) * 100;\n    }\n\n    results.push({\n        json: {\n            fund_code: code,\n            up_streak: upStreak,\n            down_streak: downStreak,\n            change_percent: (isNaN(changePercent) || !isFinite(changePercent)) ? \"0.0000\" : changePercent.toFixed(4),\n            last_price: isNaN(todayPrice) ? 0 : todayPrice,\n            analysis_date: todayDate\n        }\n    });\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5568,
+        1904
+      ],
+      "id": "a02aa31d-dfef-434a-b4a7-50188617a985",
+      "name": "yükseliş analizi"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_trend_analysis \n(fund_code, up_streak, down_streak, change_percent, last_price, analysis_date)\nVALUES \n('{{ $json[\"fund_code\"] }}', {{ $json[\"up_streak\"] }}, {{ $json[\"down_streak\"] }}, {{ $json[\"change_percent\"] }}, {{ $json[\"last_price\"] }}, '{{ $json[\"analysis_date\"] }}')\nON DUPLICATE KEY UPDATE \nup_streak = VALUES(up_streak),\ndown_streak = VALUES(down_streak),\nchange_percent = VALUES(change_percent),\nlast_price = VALUES(last_price);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        5760,
+        1904
+      ],
+      "id": "fccbd10e-d494-4c0f-8a87-ce47b308d2bc",
+      "name": "sql kayıt"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { done: true } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5184,
+        1776
+      ],
+      "id": "45d32c52-7da6-488b-b256-b5f717dbeba1",
+      "name": "temizle2"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const prices = history.map(i => parseFloat(i.FIYAT) || 0);\n    const todayPrice = prices[0];\n    const oldestPrice = prices[prices.length - 1];\n    const todayDate = history[0].tarih;\n\n    let upDaysCount = 0;\n    let downDaysCount = 0;\n\n    for (let i = 0; i < prices.length - 1; i++) {\n        if (prices[i] > prices[i + 1]) {\n            upDaysCount++;\n        } else if (prices[i] < prices[i + 1]) {\n            downDaysCount++;\n        }\n    }\n\n    let totalReturn = 0;\n    if (oldestPrice !== 0 && !isNaN(oldestPrice)) {\n        totalReturn = ((todayPrice - oldestPrice) / oldestPrice) * 100;\n    }\n\n    results.push({\n        json: {\n            fund_code: code,\n            up_days_count: upDaysCount,\n            down_days_count: downDaysCount,\n            total_return: (isNaN(totalReturn) || !isFinite(totalReturn)) ? \"0.0000\" : totalReturn.toFixed(4),\n            analysis_date: todayDate\n        }\n    });\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5568,
+        1680
+      ],
+      "id": "07f417a5-02ec-4a09-bef1-f0ae1152521b",
+      "name": "yükseliş ve düşüş analiz"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_trend_checking \n(fund_code, analysis_date, up_days_count, down_days_count, total_return)\nVALUES \n('{{ $json[\"fund_code\"] }}', '{{ $json[\"analysis_date\"] }}', {{ $json[\"up_days_count\"] }}, {{ $json[\"down_days_count\"] }}, {{ $json[\"total_return\"] }})\nON DUPLICATE KEY UPDATE \nup_days_count = VALUES(up_days_count),\ndown_days_count = VALUES(down_days_count),\ntotal_return = VALUES(total_return);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        5760,
+        1680
+      ],
+      "id": "a1884960-cd8a-4834-87a3-fa899abab3f6",
+      "name": "sql kayıt1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT code FROM tefas_funds;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        3520,
+        1232
+      ],
+      "id": "4152b93c-9775-43e6-8b83-487b0d5796f7",
+      "name": "fonları getir1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        3744,
+        1312
+      ],
+      "id": "4f4c6007-8779-45ce-afbd-8d850d5d1f2f",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "2SLTnZeExgRN8A3O",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/2SLTnZeExgRN8A3O",
           "cachedResultName": "tefasFonBilgi"
         },
         "workflowInputs": {
@@ -344,25 +613,25 @@
         },
         "mode": "each",
         "options": {
-          "waitForSubWorkflow": false
+          "waitForSubWorkflow": true
         }
       },
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2256,
-        96
+        4416,
+        1328
       ],
-      "id": "d5c104a6-cff7-4b92-8e9f-4cbd21c41426",
-      "name": "Call 'tefasFonBilgi'"
+      "id": "0a84135c-bfbd-4ab8-a044-48590a7489e6",
+      "name": "Call 'tefasFonBilgi'1"
     },
     {
       "parameters": {
         "workflowId": {
           "__rl": true,
-          "value": "Lg-uF4pVQ3cjG66RGePRM",
+          "value": "gEsq4M7b1OfCVdzF",
           "mode": "list",
-          "cachedResultUrl": "/workflow/Lg-uF4pVQ3cjG66RGePRM",
+          "cachedResultUrl": "/workflow/gEsq4M7b1OfCVdzF",
           "cachedResultName": "tefasfongetiri"
         },
         "workflowInputs": {
@@ -375,125 +644,81 @@
         },
         "mode": "each",
         "options": {
-          "waitForSubWorkflow": false
+          "waitForSubWorkflow": true
         }
       },
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2240,
-        -64
+        3952,
+        1328
       ],
-      "id": "7216a289-20ac-4a17-8126-8952cec9f4cf",
-      "name": "Call 'tefasfongetiri'"
+      "id": "23623d57-97fb-49cf-9f9f-122824f63de3",
+      "name": "Call 'tefasfongetiri'1"
     },
     {
       "parameters": {
-        "workflowId": {
-          "__rl": true,
-          "value": "vJ_n_YHx4BFCcdsl8Z0K1",
-          "mode": "list",
-          "cachedResultUrl": "/workflow/vJ_n_YHx4BFCcdsl8Z0K1",
-          "cachedResultName": "tefasgecmis"
+        "assignments": {
+          "assignments": [
+            {
+              "id": "76f49ba2-6ca2-4c20-a554-ff094a79b3bd",
+              "name": "code",
+              "value": "={{ $('Loop Over Items3').item.json.code }}",
+              "type": "string"
+            }
+          ]
         },
-        "workflowInputs": {
-          "mappingMode": "defineBelow",
-          "value": {},
-          "matchingColumns": [],
-          "schema": [],
-          "attemptToConvertTypes": false,
-          "convertFieldsToString": true
-        },
-        "mode": "each",
-        "options": {
-          "waitForSubWorkflow": false
-        }
-      },
-      "type": "n8n-nodes-base.executeWorkflow",
-      "typeVersion": 1.3,
-      "position": [
-        2768,
-        608
-      ],
-      "id": "c2808460-6078-4457-8855-bc476aad7a83",
-      "name": "Call 'tefasgecmis'"
-    },
-    {
-      "parameters": {
-        "jsCode": "const fonListesi = items[0].json.resultList;\n\nreturn fonListesi.map(item => {\n  return {\n    json: {\n      fund_code: item.fonKodu,\n      fund_name: item.fonUnvan,\n      category_name: item.fonTurAciklama\n    }\n  };\n});\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        480,
-        -32
-      ],
-      "id": "44f60e16-ebc1-4944-8103-aaa553282b39",
-      "name": "fon liste"
-    },
-    {
-      "parameters": {
-        "compare": "selectedFields",
-        "fieldsToCompare": "category_name",
         "options": {}
       },
-      "type": "n8n-nodes-base.removeDuplicates",
-      "typeVersion": 2,
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
       "position": [
-        752,
-        -32
+        4112,
+        1328
       ],
-      "id": "40934d78-cd0d-4ae9-a5c8-aec7fb1bcc54",
-      "name": "category isimleri ayrıştırma"
+      "id": "792f2384-ec96-4640-988e-06744ba77c38",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "name": "Replace Me3",
+      "typeVersion": 1,
+      "position": [
+        4608,
+        1328
+      ],
+      "id": "f9e22f53-d73b-402b-b1f1-ab46b1243a84"
     },
     {
       "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT code FROM tefas_funds;",
-        "options": {}
+        "amount": 1
       },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
       "position": [
-        1744,
-        -80
+        4256,
+        1328
       ],
-      "id": "27f287fa-7f28-4554-80a6-ee8d25a7d588",
-      "name": "fonları getir",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
+      "id": "8945bfec-42de-46aa-a444-2e7dfc410bd0",
+      "name": "Wait2",
+      "webhookId": "88002163-8fee-43d3-a91c-67b7bbd59faa"
     },
     {
-      "parameters": {
-        "jsCode": "//5 yillik tarih bilgisi olusturulur\n\nconst items = [];\nlet current = new Date(2021, 1, 15);\nconst today = new Date();\n\nwhile (current <= today) {\n    const day = String(current.getDate()).padStart(2, '0');\n    const month = String(current.getMonth() + 1).padStart(2, '0');\n    const year = current.getFullYear();\n\n    items.push({\n        json: {\n            date: `${year}${month}${day}`\n        }\n    });\n\n    current.setDate(current.getDate() + 1);\n}\n\nreturn items;\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "parameters": {},
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
       "position": [
-        2352,
-        496
+        4736,
+        1856
       ],
-      "id": "edd0d8a7-eb9a-4cff-903d-7c238e19ba3c",
-      "name": "tarih bilgisi"
+      "id": "61618b32-f7cc-4287-bea0-a445b396614f",
+      "name": "Wait1",
+      "webhookId": "6a2ad90f-ae56-4331-a19a-1f9ee3cb2848"
     }
   ],
   "pinData": {},
   "connections": {
-    "When clicking ‘Execute workflow’": {
-      "main": [
-        [
-          {
-            "node": "fon bilgi",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "fon bilgi": {
       "main": [
         [
@@ -567,68 +792,11 @@
         ]
       ]
     },
-    "Loop Over Items4": {
-      "main": [
-        [],
-        [
-          {
-            "node": "Call 'tefasgecmis'",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Replace Me4": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items4",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Replace Me1": {
-      "main": [
-        [
-          {
-            "node": "Loop Over Items1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Loop Over Items1": {
-      "main": [
-        [
-          {
-            "node": "temizle1",
-            "type": "main",
-            "index": 0
-          }
-        ],
-        [
-          {
-            "node": "Call 'tefasFonBilgi'",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "Call 'tefasfongetiri'",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "temizle": {
       "main": [
         [
           {
-            "node": "fonları getir",
+            "node": "fonları getir1",
             "type": "main",
             "index": 0
           }
@@ -639,18 +807,7 @@
       "main": [
         [
           {
-            "node": "tarih bilgisi",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Wait1": {
-      "main": [
-        [
-          {
-            "node": "Replace Me1",
+            "node": "kayitli tarihler",
             "type": "main",
             "index": 0
           }
@@ -662,33 +819,6 @@
         [
           {
             "node": "Replace Me",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Call 'tefasFonBilgi'": {
-      "main": [
-        [
-          {
-            "node": "Wait1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "Call 'tefasfongetiri'": {
-      "main": [
-        []
-      ]
-    },
-    "Call 'tefasgecmis'": {
-      "main": [
-        [
-          {
-            "node": "Replace Me4",
             "type": "main",
             "index": 0
           }
@@ -722,22 +852,273 @@
         ]
       ]
     },
-    "fonları getir": {
+    "Loop Over Items5": {
       "main": [
+        [],
         [
           {
-            "node": "Loop Over Items1",
+            "node": "Call 'tarihselveri'",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "tarih bilgisi": {
+    "Replace Me5": {
       "main": [
         [
           {
-            "node": "Loop Over Items4",
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "tarih bilgisi1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'tarihselveri'": {
+      "main": [
+        [
+          {
+            "node": "Replace Me5",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [
+          {
+            "node": "temizle2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "format dönüşümü",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'tarihselveri'1": {
+      "main": [
+        [
+          {
+            "node": "Wait1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "kayitli tarihler": {
+      "main": [
+        [
+          {
+            "node": "olmayan tarihler",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "olmayan tarihler": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "format dönüşümü": {
+      "main": [
+        [
+          {
+            "node": "Call 'tarihselveri'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "fon bilgi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "40 günlük veri": {
+      "main": [
+        [
+          {
+            "node": "yükseliş analizi",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "yükseliş ve düşüş analiz",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "yükseliş analizi": {
+      "main": [
+        [
+          {
+            "node": "sql kayıt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "temizle2": {
+      "main": [
+        [
+          {
+            "node": "40 günlük veri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "yükseliş ve düşüş analiz": {
+      "main": [
+        [
+          {
+            "node": "sql kayıt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "fonları getir1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [
+          {
+            "node": "temizle1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call 'tefasfongetiri'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'tefasFonBilgi'1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'tefasfongetiri'1": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Wait2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Replace Me3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait2": {
+      "main": [
+        [
+          {
+            "node": "Call 'tefasFonBilgi'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait1": {
+      "main": [
+        [
+          {
+            "node": "Replace Me2",
             "type": "main",
             "index": 0
           }
@@ -751,8 +1132,9 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "c0e22ffd-c1fa-4da8-ac6b-457acc056d07",
+  "versionId": "5f244263-7f52-4489-9ee8-e645e63e0fb5",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },
   "id": "xX_HzpZEMuW9AMNBI73eU",

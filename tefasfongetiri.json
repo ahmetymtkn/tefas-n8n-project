@@ -9,11 +9,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        -272,
-        -192
+        -240,
+        -96
       ],
       "typeVersion": 1,
-      "id": "d5831858-4fc5-480c-9e91-4dbfa99c3fcb",
+      "id": "35d32877-04b4-4570-b51c-c194605a0335",
       "name": "Sticky Note3"
     },
     {
@@ -23,10 +23,10 @@
       "type": "n8n-nodes-base.executeWorkflowTrigger",
       "typeVersion": 1.1,
       "position": [
-        -208,
-        -96
+        -176,
+        0
       ],
-      "id": "84d0afa3-971b-4387-858c-8f5fc6637cfb",
+      "id": "306cc25d-91c0-4a40-826f-f24def4ad815",
       "name": "When Executed by Another Workflow"
     },
     {
@@ -36,10 +36,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        144,
-        -96
+        176,
+        0
       ],
-      "id": "2952a3e9-0db4-4a02-80d2-2d9b1e1dc455",
+      "id": "479910df-5f22-4473-b958-b57de3a34a8e",
       "name": "Loop Over Items"
     },
     {
@@ -48,10 +48,10 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        976,
-        128
+        1008,
+        224
       ],
-      "id": "7d18751c-8f42-49b2-aaa1-c3146dfc11dd"
+      "id": "c45b1176-6e9b-47c4-b71e-2086427afc8a"
     },
     {
       "parameters": {
@@ -60,10 +60,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -48,
-        -96
+        -16,
+        0
       ],
-      "id": "fbcf2869-137d-46e1-9fdd-1c6e6fd5ecb2",
+      "id": "dc73f1f8-0b6e-427e-bb47-0d7cc167da6c",
       "name": "periyods"
     },
     {
@@ -73,10 +73,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        784,
-        128
+        816,
+        224
       ],
-      "id": "e46dfd9a-0af8-4293-a879-693264fa618f",
+      "id": "7a75cfea-f2df-4e94-8af3-bf4b3e3b9f24",
       "name": "temizlik"
     },
     {
@@ -88,17 +88,11 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        624,
-        128
+        656,
+        224
       ],
-      "id": "761211ce-d5d7-4644-9bd3-8653b7faec7e",
-      "name": "database kayıt",
-      "credentials": {
-        "mySql": {
-          "id": "ivghWbhMBSn5sCXQ",
-          "name": "tefas"
-        }
-      }
+      "id": "d21ed1cc-fbc4-49c7-921d-2b25b0aa44ca",
+      "name": "database kayıt"
     },
     {
       "parameters": {
@@ -107,19 +101,19 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        464,
-        128
+        496,
+        224
       ],
-      "id": "3a61ed36-6103-4e88-900a-a24ccd61fe97",
+      "id": "498245c2-c004-4101-b49f-4f539747996f",
       "name": "veri düzenleme"
     },
     {
       "parameters": {
         "method": "POST",
-        "url": "=https://tefas.takasbank.com.tr/api/funds/fonProfilDtyGetir",
+        "url": "=https://www.tefas.gov.tr/api/funds/fonProfilDtyGetir",
         "sendBody": true,
         "specifyBody": "json",
-        "jsonBody": "={\n  \"dil\": \"TR\",\n  \"fonKodu\": \"{{ $item(0).$node['When Executed by Another Workflow'].json['code'] }}\",\n  \"periyod\": {{ $json.period }}\n}\n\n\n",
+        "jsonBody": "={\n  \"dil\": \"TR\",\n  \"fonKodu\": \"{{ $item(0).$node['When Executed by Another Workflow'].json['code'] }}\",\n  \"periyod\": \"{{ $json.period }}\"\n}\n\n\n",
         "options": {
           "response": {
             "response": {
@@ -131,12 +125,25 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        304,
-        128
+        336,
+        224
       ],
-      "id": "e5146012-1d13-49b0-9bf3-7a67d2943924",
+      "id": "0580c241-a8bb-495d-99a0-a6f8b94af684",
       "name": "fon getiri karşılaştır",
       "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { done: true } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        432,
+        -16
+      ],
+      "id": "e8271977-00f1-41e4-a431-3f934ceea05a",
+      "name": "temizle2"
     }
   ],
   "pinData": {},
@@ -154,7 +161,13 @@
     },
     "Loop Over Items": {
       "main": [
-        [],
+        [
+          {
+            "node": "temizle2",
+            "type": "main",
+            "index": 0
+          }
+        ],
         [
           {
             "node": "fon getiri karşılaştır",
@@ -237,8 +250,9 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "52baf762-9658-4e87-a0bd-0dce6243fb64",
+  "versionId": "68299151-578f-4b30-a614-f029552d562b",
   "meta": {
+    "templateCredsSetupCompleted": true,
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
   },
   "id": "Lg-uF4pVQ3cjG66RGePRM",
