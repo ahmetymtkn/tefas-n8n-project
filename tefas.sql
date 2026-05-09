@@ -225,12 +225,13 @@ CREATE TABLE `tefas_comparison_history` (
 CREATE TABLE `tefas_trend_checking` (
   `id`              INT(11)       NOT NULL AUTO_INCREMENT,
   `fund_code`       VARCHAR(20)   NOT NULL,
-  `analysis_date`   DATE          NOT NULL,
+  `period_days`     INT(11)       NOT NULL,
   `up_days_count`   INT(11)       DEFAULT 0,
   `down_days_count` INT(11)       DEFAULT 0,
   `total_return`    DECIMAL(10,4) DEFAULT NULL,
+  `analysis_date`   DATE          NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_fund_date_checking` (`fund_code`, `analysis_date`),
+  UNIQUE KEY `uk_fund_period_date` (`fund_code`, `period_days`, `analysis_date`),
   CONSTRAINT `fk_checking_fund` FOREIGN KEY (`fund_code`) 
     REFERENCES `tefas_funds` (`code`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -241,14 +242,12 @@ CREATE TABLE `tefas_trend_checking` (
 CREATE TABLE `tefas_trend_analysis` (
   `id`             INT(11)       NOT NULL AUTO_INCREMENT,
   `fund_code`      VARCHAR(20)   NOT NULL,
-  `up_streak`      INT(11)       DEFAULT 0,
-  `down_streak`    INT(11)       DEFAULT 0,
+  `period_days`    INT(11)       NOT NULL,
   `change_percent` DECIMAL(10,4) DEFAULT 0.0000,
   `last_price`     DECIMAL(18,6) NOT NULL,
   `analysis_date`  DATE          NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `uk_fund_date` (`fund_code`, `analysis_date`),
+  UNIQUE KEY `uk_fund_period_date` (`fund_code`, `period_days`, `analysis_date`),
   CONSTRAINT `fk_analysis_fund` FOREIGN KEY (`fund_code`) 
     REFERENCES `tefas_funds` (`code`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-

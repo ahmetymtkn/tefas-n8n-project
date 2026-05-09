@@ -10,11 +10,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1744,
-        1072
+        3008,
+        1184
       ],
       "typeVersion": 1,
-      "id": "9b10a184-a2be-4b78-8743-dfe1651894bc",
+      "id": "9225563c-6ea6-4148-8b2a-bc3ac873adb5",
       "name": "Sticky Note"
     },
     {
@@ -48,10 +48,10 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.3,
       "position": [
-        2016,
-        1152
+        3280,
+        1264
       ],
-      "id": "cfc959d6-a6fb-4ba8-b12a-1e939881f344",
+      "id": "0c3a8cdc-4258-488d-99ea-583972315ca4",
       "name": "fon bilgi"
     },
     {
@@ -61,10 +61,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        2448,
-        1328
+        3712,
+        1440
       ],
-      "id": "ad36fdfc-30e4-4900-aee1-f5eaadf68107",
+      "id": "e70c7bdb-a6a4-4f30-967c-b635eb3dcc5a",
       "name": "Wait",
       "webhookId": "3880c23f-b270-4a7d-b659-500f99235b7b"
     },
@@ -75,10 +75,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        2288,
-        1680
+        3552,
+        1792
       ],
-      "id": "23aacf84-0734-41d8-9f01-31ae6f699f6f",
+      "id": "d39a6020-f011-42a3-bb3a-d8805644b732",
       "name": "Loop Over Items"
     },
     {
@@ -87,10 +87,10 @@
       "name": "Replace Me",
       "typeVersion": 1,
       "position": [
-        2944,
-        1824
+        4208,
+        1936
       ],
-      "id": "d713c5a8-a413-4422-bb57-b806899296d8"
+      "id": "359c6482-25d6-4351-b727-3f69e78ceea3"
     },
     {
       "parameters": {
@@ -99,10 +99,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2032,
-        1680
+        3296,
+        1792
       ],
-      "id": "9fd65699-f3c0-4f5c-a36b-556a10b61ee2",
+      "id": "282e4474-48d8-49c3-babe-c975fbd61e86",
       "name": "periyods"
     },
     {
@@ -114,10 +114,10 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        2736,
-        1328
+        4000,
+        1440
       ],
-      "id": "958bfdcc-6a71-4fa1-a12e-db310cb7439b",
+      "id": "8e1a20b0-d4f9-4d3f-8301-993410e1b6f4",
       "name": "fon kayıt"
     },
     {
@@ -129,10 +129,10 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        2768,
-        1152
+        4032,
+        1264
       ],
-      "id": "c90ba93d-5901-4b65-b526-9bdb51fcbcb7",
+      "id": "549e9c1f-23dc-4e85-a564-0e971ed4b35f",
       "name": "kategori kayıt"
     },
     {
@@ -144,11 +144,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3328,
-        1072
+        4592,
+        1184
       ],
       "typeVersion": 1,
-      "id": "a820f194-1985-476d-95be-479bf82a8613",
+      "id": "fef0d0cb-1aa7-40ed-af50-67ca4abb0f8e",
       "name": "Sticky Note2"
     },
     {
@@ -160,37 +160,37 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        3584,
-        1616
+        4848,
+        1728
       ],
       "typeVersion": 1,
-      "id": "027183c4-7375-45ef-895d-c9f2b03de5b6",
+      "id": "023ef8be-1928-4f1e-8677-6f81c4166809",
       "name": "Sticky Note4"
     },
     {
       "parameters": {
-        "jsCode": "return [{ json: { done: true } }];\n"
+        "jsCode": "// Loop bittiğinde gelen 8 item'i (true'lar) tek item'e indirger\nreturn [{ json: { done: true } }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2752,
-        1680
+        4016,
+        1792
       ],
-      "id": "b92e5609-33a2-4ba3-8149-4f8a1c186c68",
+      "id": "28fbde1a-057b-4770-8ece-1cbca21a515a",
       "name": "temizle"
     },
     {
       "parameters": {
-        "jsCode": "return [{ json: { done: true } }];\n"
+        "jsCode": "// Loop bittiğinde gelen 8 item'i (true'lar) tek item'e indirger\nreturn [{ json: { done: true } }];\n"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3616,
-        1792
+        4880,
+        1904
       ],
-      "id": "94d56f08-b699-4451-90dc-2c5690dd242c",
+      "id": "0e76d059-f9d8-46e6-ba7c-f698d7e079f5",
       "name": "temizle1"
     },
     {
@@ -218,10 +218,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        2576,
-        1792
+        3840,
+        1904
       ],
-      "id": "463e14af-f193-4b37-8c2b-c0370990bd27",
+      "id": "8fef4bbb-bc01-4007-b4f4-d80ce2c871ca",
       "name": "Call 'tefasEnCokKazandiranlar'"
     },
     {
@@ -231,10 +231,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        2208,
-        1152
+        3472,
+        1264
       ],
-      "id": "59c0d48a-bf1f-486d-9c40-29c40a916631",
+      "id": "afbdcdab-d33f-4513-8e11-26f6e936afeb",
       "name": "fon liste"
     },
     {
@@ -246,10 +246,10 @@
       "type": "n8n-nodes-base.removeDuplicates",
       "typeVersion": 2,
       "position": [
-        2480,
-        1152
+        3744,
+        1264
       ],
-      "id": "0c94ba64-b6bd-4605-934d-22bcf13f96bf",
+      "id": "5a31794f-95ac-499d-8c0a-b08e978f53f8",
       "name": "category isimleri ayrıştırma"
     },
     {
@@ -261,11 +261,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        1744,
-        1616
+        3008,
+        1728
       ],
       "typeVersion": 1,
-      "id": "f0ae39b8-32e2-46f3-9c77-99ea0f146ef5",
+      "id": "ae7bc723-0f88-40e9-9643-3499b6eed988",
       "name": "Sticky Note1"
     },
     {
@@ -275,10 +275,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        5264,
-        1136
+        6528,
+        1248
       ],
-      "id": "cd7429e3-b135-4e78-a1dc-9439a20bb653",
+      "id": "e9b978cb-c09e-4e39-9abe-4cbd86818661",
       "name": "Loop Over Items5"
     },
     {
@@ -287,10 +287,10 @@
       "name": "Replace Me5",
       "typeVersion": 1,
       "position": [
-        5600,
-        1264
+        6864,
+        1376
       ],
-      "id": "3e7b99f6-e34d-44f8-9fd4-e12b5374e291"
+      "id": "70760261-e32b-446b-8b37-74f236b0a67a"
     },
     {
       "parameters": {
@@ -299,10 +299,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        5072,
-        1136
+        6336,
+        1248
       ],
-      "id": "cd04b37a-d72e-4f0e-bf24-ddffa2137635",
+      "id": "e8fe404e-44a7-4341-9f63-1ba808b3cd15",
       "name": "tarih bilgisi1"
     },
     {
@@ -330,10 +330,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        5424,
-        1264
+        6688,
+        1376
       ],
-      "id": "709913d8-0fe6-4ec5-9374-55ba525e5bd9",
+      "id": "366399da-2f71-4225-8fb5-542de7fb7d66",
       "name": "Call 'tarihselveri'"
     },
     {
@@ -343,10 +343,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        4128,
-        1840
+        5392,
+        1952
       ],
-      "id": "731a6397-af84-4430-8ba4-125959ef356a",
+      "id": "7e6ad268-6f92-4513-a2ec-756ab0b752a3",
       "name": "Loop Over Items2"
     },
     {
@@ -373,10 +373,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        4528,
-        1856
+        5792,
+        1968
       ],
-      "id": "b8fadb07-09ee-47e5-a9ee-98d0c895a2e7",
+      "id": "56baea56-c07b-4100-abac-4cf8b446ed00",
       "name": "Call 'tarihselveri'1"
     },
     {
@@ -385,10 +385,10 @@
       "name": "Replace Me2",
       "typeVersion": 1,
       "position": [
-        4976,
-        1904
+        6240,
+        2016
       ],
-      "id": "16c53948-4e1f-4a93-acd4-125d34ca93f5"
+      "id": "87e1eea6-6231-4dcb-9188-4211757d66dd"
     },
     {
       "parameters": {
@@ -399,10 +399,10 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        3824,
-        1840
+        5088,
+        1952
       ],
-      "id": "d64ee33f-c094-4d74-9b6c-f7eb5ce7c636",
+      "id": "29bbd83c-475f-428c-a862-fed2bfd3a703",
       "name": "kayitli tarihler"
     },
     {
@@ -412,10 +412,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        3952,
-        1840
+        5216,
+        1952
       ],
-      "id": "63c33a3f-6668-43fe-b275-1e6d96ee6a77",
+      "id": "7f8a6d09-03db-4de5-a008-22ff3f2ade28",
       "name": "olmayan tarihler"
     },
     {
@@ -425,10 +425,10 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        4336,
-        1856
+        5600,
+        1968
       ],
-      "id": "f2e447df-0c3f-4881-b432-f348a95a8729",
+      "id": "5ffd6999-b1eb-4cdd-a495-38346a9f730f",
       "name": "format dönüşümü"
     },
     {
@@ -439,11 +439,11 @@
       },
       "type": "n8n-nodes-base.stickyNote",
       "position": [
-        4960,
-        1072
+        6224,
+        1184
       ],
       "typeVersion": 1,
-      "id": "d319a528-db5e-42b6-bece-9e6df8f58d21",
+      "id": "489eb4d9-01d9-42fe-8f01-6842ae5824ed",
       "name": "Sticky Note3"
     },
     {
@@ -459,112 +459,12 @@
       "type": "n8n-nodes-base.scheduleTrigger",
       "typeVersion": 1.3,
       "position": [
-        1808,
-        1168
+        3072,
+        1280
       ],
-      "id": "b89f5013-3def-4a8c-90d2-5a7d29085177",
+      "id": "f46ad4e8-eb3f-46bc-ad60-d22e420e6e81",
       "name": "Schedule Trigger",
       "onError": "continueRegularOutput"
-    },
-    {
-      "parameters": {
-        "content": "## Trend\n\n",
-        "height": 496,
-        "width": 880,
-        "color": 2
-      },
-      "type": "n8n-nodes-base.stickyNote",
-      "position": [
-        5152,
-        1616
-      ],
-      "typeVersion": 1,
-      "id": "29c8157f-47ad-4ef4-86c1-2eaf3dbdbf3b",
-      "name": "Sticky Note5"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "SELECT code, FIYAT, tarih \nFROM tefas_fund_details \nWHERE tarih >= DATE_SUB(CURDATE(), INTERVAL 40 DAY) -- \nORDER BY code, tarih DESC;",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        5360,
-        1776
-      ],
-      "id": "92fbb633-9329-45d0-b8e8-bf1085e0d691",
-      "name": "40 günlük veri"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const prices = history.map(i => parseFloat(i.FIYAT) || 0);\n    const todayPrice = prices[0];\n    const todayDate = history[0].tarih;\n\n    let upStreak = 0;\n    let downStreak = 0;\n    let streakStartPrice = todayPrice;\n\n    if (prices[0] > prices[1]) {\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] > prices[i + 1]) {\n                upStreak++;\n                streakStartPrice = prices[i + 1];\n            } else break;\n        }\n    } else if (prices[0] < prices[1]) {\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] < prices[i + 1]) {\n                downStreak++;\n                streakStartPrice = prices[i + 1];\n            } else break;\n        }\n    }\n\n    let changePercent = 0;\n    if (streakStartPrice !== 0 && !isNaN(streakStartPrice)) {\n        changePercent = ((todayPrice - streakStartPrice) / streakStartPrice) * 100;\n    }\n\n    results.push({\n        json: {\n            fund_code: code,\n            up_streak: upStreak,\n            down_streak: downStreak,\n            change_percent: (isNaN(changePercent) || !isFinite(changePercent)) ? \"0.0000\" : changePercent.toFixed(4),\n            last_price: isNaN(todayPrice) ? 0 : todayPrice,\n            analysis_date: todayDate\n        }\n    });\n}\n\nreturn results;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        5568,
-        1904
-      ],
-      "id": "a02aa31d-dfef-434a-b4a7-50188617a985",
-      "name": "yükseliş analizi"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO tefas_trend_analysis \n(fund_code, up_streak, down_streak, change_percent, last_price, analysis_date)\nVALUES \n('{{ $json[\"fund_code\"] }}', {{ $json[\"up_streak\"] }}, {{ $json[\"down_streak\"] }}, {{ $json[\"change_percent\"] }}, {{ $json[\"last_price\"] }}, '{{ $json[\"analysis_date\"] }}')\nON DUPLICATE KEY UPDATE \nup_streak = VALUES(up_streak),\ndown_streak = VALUES(down_streak),\nchange_percent = VALUES(change_percent),\nlast_price = VALUES(last_price);",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        5760,
-        1904
-      ],
-      "id": "fccbd10e-d494-4c0f-8a87-ce47b308d2bc",
-      "name": "sql kayıt"
-    },
-    {
-      "parameters": {
-        "jsCode": "return [{ json: { done: true } }];\n"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        5184,
-        1776
-      ],
-      "id": "45d32c52-7da6-488b-b256-b5f717dbeba1",
-      "name": "temizle2"
-    },
-    {
-      "parameters": {
-        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const prices = history.map(i => parseFloat(i.FIYAT) || 0);\n    const todayPrice = prices[0];\n    const oldestPrice = prices[prices.length - 1];\n    const todayDate = history[0].tarih;\n\n    let upDaysCount = 0;\n    let downDaysCount = 0;\n\n    for (let i = 0; i < prices.length - 1; i++) {\n        if (prices[i] > prices[i + 1]) {\n            upDaysCount++;\n        } else if (prices[i] < prices[i + 1]) {\n            downDaysCount++;\n        }\n    }\n\n    let totalReturn = 0;\n    if (oldestPrice !== 0 && !isNaN(oldestPrice)) {\n        totalReturn = ((todayPrice - oldestPrice) / oldestPrice) * 100;\n    }\n\n    results.push({\n        json: {\n            fund_code: code,\n            up_days_count: upDaysCount,\n            down_days_count: downDaysCount,\n            total_return: (isNaN(totalReturn) || !isFinite(totalReturn)) ? \"0.0000\" : totalReturn.toFixed(4),\n            analysis_date: todayDate\n        }\n    });\n}\n\nreturn results;"
-      },
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
-      "position": [
-        5568,
-        1680
-      ],
-      "id": "07f417a5-02ec-4a09-bef1-f0ae1152521b",
-      "name": "yükseliş ve düşüş analiz"
-    },
-    {
-      "parameters": {
-        "operation": "executeQuery",
-        "query": "INSERT INTO tefas_trend_checking \n(fund_code, analysis_date, up_days_count, down_days_count, total_return)\nVALUES \n('{{ $json[\"fund_code\"] }}', '{{ $json[\"analysis_date\"] }}', {{ $json[\"up_days_count\"] }}, {{ $json[\"down_days_count\"] }}, {{ $json[\"total_return\"] }})\nON DUPLICATE KEY UPDATE \nup_days_count = VALUES(up_days_count),\ndown_days_count = VALUES(down_days_count),\ntotal_return = VALUES(total_return);",
-        "options": {}
-      },
-      "type": "n8n-nodes-base.mySql",
-      "typeVersion": 2.5,
-      "position": [
-        5760,
-        1680
-      ],
-      "id": "a1884960-cd8a-4834-87a3-fa899abab3f6",
-      "name": "sql kayıt1"
     },
     {
       "parameters": {
@@ -575,10 +475,10 @@
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.5,
       "position": [
-        3520,
-        1232
+        4784,
+        1344
       ],
-      "id": "4152b93c-9775-43e6-8b83-487b0d5796f7",
+      "id": "93fc3acd-674a-4bd1-a67d-95a5cd8a3c7a",
       "name": "fonları getir1"
     },
     {
@@ -588,10 +488,10 @@
       "type": "n8n-nodes-base.splitInBatches",
       "typeVersion": 3,
       "position": [
-        3744,
-        1312
+        5008,
+        1424
       ],
-      "id": "4f4c6007-8779-45ce-afbd-8d850d5d1f2f",
+      "id": "87a30905-cc63-4e24-80ee-1d02f176d08b",
       "name": "Loop Over Items3"
     },
     {
@@ -619,10 +519,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        4416,
-        1328
+        5680,
+        1440
       ],
-      "id": "0a84135c-bfbd-4ab8-a044-48590a7489e6",
+      "id": "d9b52c3f-4364-4031-bd10-9385a6112ec0",
       "name": "Call 'tefasFonBilgi'1"
     },
     {
@@ -650,10 +550,10 @@
       "type": "n8n-nodes-base.executeWorkflow",
       "typeVersion": 1.3,
       "position": [
-        3952,
-        1328
+        5216,
+        1440
       ],
-      "id": "23623d57-97fb-49cf-9f9f-122824f63de3",
+      "id": "031efe27-e0e9-46fb-a419-677f371dd5b8",
       "name": "Call 'tefasfongetiri'1"
     },
     {
@@ -673,10 +573,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        4112,
-        1328
+        5376,
+        1440
       ],
-      "id": "792f2384-ec96-4640-988e-06744ba77c38",
+      "id": "b6037d7d-200d-4d40-bdc3-8f421b672e45",
       "name": "Edit Fields"
     },
     {
@@ -685,10 +585,10 @@
       "name": "Replace Me3",
       "typeVersion": 1,
       "position": [
-        4608,
-        1328
+        5872,
+        1440
       ],
-      "id": "f9e22f53-d73b-402b-b1f1-ab46b1243a84"
+      "id": "4d4a511b-db09-4f80-b8d5-6290831a4961"
     },
     {
       "parameters": {
@@ -697,10 +597,10 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        4256,
-        1328
+        5520,
+        1440
       ],
-      "id": "8945bfec-42de-46aa-a444-2e7dfc410bd0",
+      "id": "25c48973-d0f8-4f49-8db4-ca12a0535f23",
       "name": "Wait2",
       "webhookId": "88002163-8fee-43d3-a91c-67b7bbd59faa"
     },
@@ -709,12 +609,113 @@
       "type": "n8n-nodes-base.wait",
       "typeVersion": 1.1,
       "position": [
-        4736,
-        1856
+        6000,
+        1968
       ],
-      "id": "61618b32-f7cc-4287-bea0-a445b396614f",
+      "id": "46481ac7-e8ef-4b82-8b87-d43d7f9e4cff",
       "name": "Wait1",
       "webhookId": "6a2ad90f-ae56-4331-a19a-1f9ee3cb2848"
+    },
+    {
+      "parameters": {
+        "content": "## Trend\n\n",
+        "height": 496,
+        "width": 816,
+        "color": "#E66100"
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        6432,
+        1728
+      ],
+      "typeVersion": 1,
+      "id": "3e6af374-6fc9-45a9-9bdc-25285f895fb9",
+      "name": "Sticky Note5"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_trend_checking \n  (fund_code, period_days, analysis_date, up_days_count, down_days_count, total_return)\nVALUES \n  (\n    '{{ $json[\"fund_code\"] }}',\n    {{ $json[\"period_days\"] }},\n    '{{ $json[\"analysis_date\"] }}',\n    {{ $json[\"up_days_count\"] }},\n    {{ $json[\"down_days_count\"] }},\n    {{ $json[\"total_return\"] }}\n  )\nON DUPLICATE KEY UPDATE \n  up_days_count   = VALUES(up_days_count),\n  down_days_count = VALUES(down_days_count),\n  total_return    = VALUES(total_return);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        7040,
+        2016
+      ],
+      "id": "a8e5898c-6a2f-4564-8368-9f013052ad3d",
+      "name": "sql kayıt"
+    },
+    {
+      "parameters": {
+        "jsCode": "return [{ json: { done: true } }];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6464,
+        1824
+      ],
+      "id": "36206c59-a5df-48a9-a15a-dc6656922d99",
+      "name": "temizle2"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "INSERT INTO tefas_trend_analysis \n  (fund_code, period_days, change_percent, last_price, analysis_date)\nVALUES \n  (\n    '{{ $json[\"fund_code\"] }}',\n    {{ $json[\"period_days\"] }},\n    {{ $json[\"change_percent\"] }},\n    {{ $json[\"last_price\"] }},\n    '{{ $json[\"analysis_date\"] }}'\n  )\nON DUPLICATE KEY UPDATE \n  change_percent = VALUES(change_percent),\n  last_price     = VALUES(last_price);",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        7040,
+        1776
+      ],
+      "id": "0c068bf0-1166-4e76-a97d-3aba1ea21704",
+      "name": "sql kayıt1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "WITH ranked AS (\n    SELECT \n        code,\n        FIYAT,\n        tarih,\n        ROW_NUMBER() OVER (\n            PARTITION BY code \n            ORDER BY tarih DESC\n        ) AS rn\n    FROM tefas_fund_details\n)\n\nSELECT code, FIYAT, tarih\nFROM ranked\nWHERE rn <= 30\nORDER BY code, tarih DESC;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        6640,
+        1872
+      ],
+      "id": "ab49099c-d4e3-4330-bd46-525c9c276f8f",
+      "name": "30 günlük veri",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst PERIODS = [2, 3, 5, 7, 14, 21];\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const todayDate = history[0].tarih;\n\n    for (const period of PERIODS) {\n        // Tam olarak `period` kadar gün olmalı\n        if (history.length < period) continue;\n\n        const slice = history.slice(0, period);\n        const prices = slice.map(i => parseFloat(i.FIYAT));\n\n        \n        let allUp = true;\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] <= prices[i + 1]) {\n                allUp = false;\n                break;\n            }\n        }\n\n        if (!allUp) continue;\n\n        const todayPrice = prices[0];\n        const startPrice = prices[period - 1];\n\n        const changePercent = ((todayPrice - startPrice) / startPrice) * 100;\n\n        if (!isFinite(changePercent) || isNaN(changePercent) || changePercent <= 0) continue;\n\n        results.push({\n            json: {\n                fund_code: code,\n                period_days: period,\n                change_percent: parseFloat(changePercent.toFixed(4)),\n                last_price: todayPrice,\n                analysis_date: todayDate\n            }\n        });\n    }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6848,
+        1776
+      ],
+      "id": "db371fda-b3cd-4e45-b2bd-1e42837953fe",
+      "name": "yükseliş  analiz"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst grouped = {};\n\nitems.forEach(item => {\n    const code = item.json.code;\n    if (!grouped[code]) grouped[code] = [];\n    grouped[code].push(item.json);\n});\n\nconst PERIODS = [3, 5, 7, 14, 21, 30];\nconst results = [];\n\nfor (const code in grouped) {\n    const history = grouped[code];\n    if (history.length < 2) continue;\n\n    const todayDate = history[0].tarih;\n\n    for (const period of PERIODS) {\n        const slice = history.slice(0, period);\n        if (slice.length < 2) continue;\n\n        const prices = slice.map(i => parseFloat(i.FIYAT) || 0);\n        const todayPrice = prices[0];\n        const oldestPrice = prices[prices.length - 1];\n\n        let upDaysCount = 0;\n        let downDaysCount = 0;\n\n        for (let i = 0; i < prices.length - 1; i++) {\n            if (prices[i] > prices[i + 1]) upDaysCount++;\n            else if (prices[i] < prices[i + 1]) downDaysCount++;\n        }\n\n        let totalReturn = 0;\n        if (oldestPrice !== 0 && !isNaN(oldestPrice)) {\n            totalReturn = ((todayPrice - oldestPrice) / oldestPrice) * 100;\n        }\n\n        results.push({\n            json: {\n                fund_code: code,\n                period_days: period,\n                up_days_count: upDaysCount,\n                down_days_count: downDaysCount,\n                total_return: (isNaN(totalReturn) || !isFinite(totalReturn))\n                    ? \"0.0000\"\n                    : totalReturn.toFixed(4),\n                analysis_date: todayDate\n            }\n        });\n    }\n}\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        6848,
+        2016
+      ],
+      "id": "b7d2dc24-3a01-4eb8-abd4-92cd367a1bbb",
+      "name": "yükseliş ve düşüş analizi"
     }
   ],
   "pinData": {},
@@ -981,55 +982,6 @@
         ]
       ]
     },
-    "40 günlük veri": {
-      "main": [
-        [
-          {
-            "node": "yükseliş analizi",
-            "type": "main",
-            "index": 0
-          },
-          {
-            "node": "yükseliş ve düşüş analiz",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "yükseliş analizi": {
-      "main": [
-        [
-          {
-            "node": "sql kayıt",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "temizle2": {
-      "main": [
-        [
-          {
-            "node": "40 günlük veri",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "yükseliş ve düşüş analiz": {
-      "main": [
-        [
-          {
-            "node": "sql kayıt1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "fonları getir1": {
       "main": [
         [
@@ -1124,6 +1076,55 @@
           }
         ]
       ]
+    },
+    "temizle2": {
+      "main": [
+        [
+          {
+            "node": "30 günlük veri",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "30 günlük veri": {
+      "main": [
+        [
+          {
+            "node": "yükseliş  analiz",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "yükseliş ve düşüş analizi",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "yükseliş  analiz": {
+      "main": [
+        [
+          {
+            "node": "sql kayıt1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "yükseliş ve düşüş analizi": {
+      "main": [
+        [
+          {
+            "node": "sql kayıt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "active": false,
@@ -1132,7 +1133,7 @@
     "binaryMode": "separate",
     "availableInMCP": false
   },
-  "versionId": "5f244263-7f52-4489-9ee8-e645e63e0fb5",
+  "versionId": "a6ad32e9-27d5-439a-9ae7-35e61825c5c0",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "a16187c824ee130955cb890395f4c9d0a57b97ece91599ab76972d569b132bfc"
